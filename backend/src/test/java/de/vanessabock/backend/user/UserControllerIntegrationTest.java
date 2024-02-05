@@ -2,12 +2,11 @@ package de.vanessabock.backend.user;
 
 import de.vanessabock.backend.user.model.User;
 import de.vanessabock.backend.user.repository.UserRepo;
-import de.vanessabock.backend.user.service.UserService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,8 +28,6 @@ class UserControllerIntegrationTest {
     @Autowired
     private UserRepo userRepo;
 
-    private final UserService userService = Mockito.mock(UserService.class);
-
     @Test
     void getLoggedInUserTest_shouldReturnUser_whenUserLoggedIn() throws Exception {
         //GIVEN
@@ -48,6 +45,38 @@ class UserControllerIntegrationTest {
                             "githubId":123456,
                             "name":"user",
                             "favouriteStations":[]
+                        }
+                        """))
+                .andReturn();
+
+        assertEquals(200, mvcResult.getResponse().getStatus());
+    }
+
+    @Test
+    void updateUserTest_shouldUpdatedUser_whenUserIsUpdated() throws Exception {
+        //GIVEN
+        userRepo.save(new User("123456", 123456, "user", new ArrayList<>()));
+
+        //WHEN
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/api/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                                                         
+                        {
+                            "id":"123456",
+                            "githubId":123456,
+                            "name":"user",
+                            "favouriteStations":["10"]
+                        }
+                                        """))
+                //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                            "id":"123456",
+                            "githubId":123456,
+                            "name":"user",
+                            "favouriteStations":["10"]
                         }
                         """))
                 .andReturn();

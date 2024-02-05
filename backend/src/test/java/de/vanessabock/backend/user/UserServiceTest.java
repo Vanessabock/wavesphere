@@ -11,11 +11,10 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 @SpringBootTest
 class UserServiceTest {
@@ -29,6 +28,20 @@ class UserServiceTest {
     void getLoggedInUser_ShouldReturnNull_WhenUserIsNull() {
         // When
         User result = userService.getLoggedInUser(null);
+
+        // Then
+        assertNull(result);
+        verifyNoInteractions(userRepo);
+    }
+
+    @Test
+    void getLoggedInUser_ShouldReturnNull_WhenGithubIdIsNull() {
+        //Given
+        OAuth2User user = mock(OAuth2User.class);
+        when(user.getAttribute("id")).thenReturn(null);
+
+        // When
+        User result = userService.getLoggedInUser(user);
 
         // Then
         assertNull(result);
