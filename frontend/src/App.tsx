@@ -3,7 +3,7 @@ import {Header} from "./components/header.tsx";
 import Home from "./components/home.tsx";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {User} from "./types/User.ts";
 import {Login} from "./components/login.tsx";
 import SignUp from "./components/signup.tsx";
@@ -12,6 +12,10 @@ function App() {
     const navigate = useNavigate();
 
     const [user, setUser] = useState<User>(null);
+
+    useEffect(() => {
+        axios.get("/api/user").then((response) => setUser(response.data));
+    }, []);
 
     const logout = () =>
         axios.get("/api/user/logout").then(() => {
