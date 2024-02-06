@@ -4,8 +4,7 @@ import de.vanessabock.backend.user.model.User;
 import de.vanessabock.backend.user.repository.UserRepo;
 import de.vanessabock.backend.user.service.UserService;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -18,39 +17,39 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserServiceTest {
-    @Mock
-    private UserRepo userRepo;
+    UserRepo userRepo = Mockito.mock(UserRepo.class);
 
-    @InjectMocks
-    private UserService userService;
+    UserService userService = new UserService(userRepo);
+
 
     @Test
     void getLoggedInUser_ShouldReturnNull_WhenUserIsNull() {
-        // When
+        //GIVEN
+        //WHEN
         User result = userService.getLoggedInUser(null);
 
-        // Then
+        //THEN
         assertNull(result);
         verifyNoInteractions(userRepo);
     }
 
     @Test
     void getLoggedInUser_ShouldReturnNull_WhenGithubIdIsNull() {
-        //Given
+        //GIVEN
         OAuth2User user = mock(OAuth2User.class);
         when(user.getAttribute("id")).thenReturn(null);
 
-        // When
+        //WHEN
         User result = userService.getLoggedInUser(user);
 
-        // Then
+        //THEN
         assertNull(result);
         verifyNoInteractions(userRepo);
     }
 
     @Test
     void getLoggedInUser_ShouldSaveNewUser_WhenUserNotInDatabase() {
-        // Given
+        //GIVEN
         OAuth2User user = mock(OAuth2User.class);
         int id = 123456;
         String name = "User";
@@ -61,10 +60,10 @@ class UserServiceTest {
         User expected = new User("generatedId", id, name, new ArrayList<>());
         when(userRepo.save(any(User.class))).thenReturn(expected);
 
-        // When
+        //WHEN
         User actual = userService.getLoggedInUser(user);
 
-        // Then
+        //THEN
         assertEquals(expected, actual);
         verify(userRepo, times(1)).existsUserByGithubId(id);
         verify(userRepo, times(1)).save(any(User.class));
@@ -73,7 +72,7 @@ class UserServiceTest {
 
     @Test
     void getUserShouldReturnExistingUserWhenUserInDatabase() {
-        // Given
+        //GIVEN
         OAuth2User user = mock(OAuth2User.class);
         int id = 123456;
         String name = "User";
@@ -83,10 +82,10 @@ class UserServiceTest {
         User expected = new User("existingId", id, name, new ArrayList<>());
         when(userRepo.findUserByGithubId(id)).thenReturn(expected);
 
-        // When
+        //WHEN
         User actual = userService.getLoggedInUser(user);
 
-        // Then
+        //THEN
         assertEquals(expected, actual);
         verify(userRepo, times(1)).existsUserByGithubId(id);
         verify(userRepo, times(1)).findUserByGithubId(id);
@@ -95,14 +94,14 @@ class UserServiceTest {
 
     @Test
     void updateUserTest_ShouldSaveUserToDatabaseAndReturnUser_WhenUserIsUpdated() {
-        // Given
+        //GIVEN
         User expected = new User("123", 123423, "User", new ArrayList<>());
         when(userRepo.save(any(User.class))).thenReturn(expected);
 
-        // When
+        //WHEN
         User actual = userService.updateUser(expected);
 
-        // Then
+        //THEN
         assertEquals(expected, actual);
         verify(userRepo, times(1)).save(expected);
         verifyNoMoreInteractions(userRepo);
