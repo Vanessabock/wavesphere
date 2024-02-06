@@ -2,7 +2,6 @@ package de.vanessabock.backend.user.controller;
 
 import de.vanessabock.backend.user.model.User;
 import de.vanessabock.backend.user.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +24,6 @@ public class UserController {
     @PutMapping
     public User updateUser(@RequestBody User user){
         return userService.updateUser(user);
-    }
-
-    @GetMapping("/logout")
-    public void logout(HttpSession httpSession){
-        httpSession.invalidate();
     }
 
 }
