@@ -18,7 +18,7 @@ function App() {
     }, []);
 
     const logout = () =>
-        axios.get("/api/user/logout").then(() => {
+        axios.get("/api/logout").then(() => {
             setUser(null);
             navigate("/");
         });
