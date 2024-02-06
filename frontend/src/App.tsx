@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {User} from "./types/User.ts";
 import {Login} from "./components/login.tsx";
 import SignUp from "./components/signup.tsx";
+import {StationsList} from "./components/stations-list.tsx";
 
 function App() {
     const navigate = useNavigate();
@@ -28,8 +29,9 @@ function App() {
           <Header isLoggedIn={!!user} logout={logout}/>
           <Routes>
               <Route path="/" element={<Home/>}/>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/signup" element={<SignUp/>}/>
+              <Route path="/stations" element={<StationsList/>}/>
           </Routes>
       </div>
   )
