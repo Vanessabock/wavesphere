@@ -16,7 +16,7 @@ type HeaderProps = {
 export const Header: React.FC<HeaderProps> = ({isLoggedIn, logout}) => {
     const menuItems: { name: string; href: string }[] = [{name: "Home", href: "/"}];
 
-    const loggedInMenuItems: { name: string; href: string }[] = [{name: "Books", href: "/books"}];
+    const loggedInMenuItems: { name: string; href: string }[] = [{name: "Radio Stations", href: "/stations"}];
 
     if (isLoggedIn) {
         menuItems.push(...loggedInMenuItems);
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({isLoggedIn, logout}) => {
                     <div className="flex h-full">
                         <Link to={"/"} className="flex h-full items-center">
                             <img src={logoUrl} alt="logo" className="mr-2 h-full"/>
-                            <span className="mr-10 text-l text-[#17233c] font-bold">wavesphere</span>
+                            <span className="mr-10 text-l text-[#17233c]">wavesphere</span>
                         </Link>
                         <div className="hidden items-center text-sm text-gray-600 lg:flex"
                              onMouseLeave={onMenuMouseLeave}>
