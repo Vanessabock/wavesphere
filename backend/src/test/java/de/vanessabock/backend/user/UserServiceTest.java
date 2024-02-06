@@ -4,8 +4,6 @@ import de.vanessabock.backend.user.model.User;
 import de.vanessabock.backend.user.repository.UserRepo;
 import de.vanessabock.backend.user.service.UserService;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
