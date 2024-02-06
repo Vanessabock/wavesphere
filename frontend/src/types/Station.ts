@@ -7,4 +7,4 @@ export type Station = {
     countrycode: string;
     votes: number;
 
-} | null;
+};

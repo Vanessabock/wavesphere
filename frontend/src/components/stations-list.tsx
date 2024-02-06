@@ -17,7 +17,7 @@ export const StationsList = () => {
     return (
         <div className="flex justify-center bg-[#17233c]">
             <div className="flex flex-col  p-10 w-2/3">
-                {stations?.map((s, i) => <StationCard key={i} station={s}/>)}
+                {stations.map((s, i) => <StationCard key={i} station={s}/>)}
             </div>
         </div>
     )
