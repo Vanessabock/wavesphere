@@ -15,7 +15,8 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
 
 import java.io.IOException;
 
@@ -137,7 +138,7 @@ public class RadioApiIntegrationTest {
 
 
         //WHEN
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/radioStations?count=2"))
+        MvcResult mvcResult = mockMvc.perform(get("/api/radioStations?count=2"))
 
                 //THEN
                 .andExpect(status().isOk())
