@@ -24,13 +24,9 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-                .logout(logout -> {
-                    if (environment.equals("prod")) {
-                        logout.logoutSuccessUrl("/").permitAll();
-                    } else {
-                        logout.logoutSuccessUrl("http://localhost:5173").permitAll();
-                    }
-                })
+                .logout(l -> l.logoutUrl("/api/logout")
+                        .logoutSuccessHandler(((request, response, authentication) -> response.setStatus(200)))
+                )
                 .oauth2Login(c -> {
                     try {
                         c.init(http);
