@@ -46,4 +46,17 @@ public class Station {
     public int getVotes() {
         return votes;
     }
+
+    @Override
+    public String toString() {
+        return "Station{" +
+                "stationuuid='" + stationuuid + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", homepage='" + homepage + '\'' +
+                ", favicon='" + favicon + '\'' +
+                ", countrycode='" + countrycode + '\'' +
+                ", votes=" + votes +
+                '}';
+    }
 }
