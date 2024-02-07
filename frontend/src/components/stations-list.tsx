@@ -15,7 +15,7 @@ export const StationsList = () => {
     }, []);
 
     return (
-        <div className="flex justify-center bg-[#17233c]">
+        <div className="flex justify-center bg-gradient-to-br min-h-screen bg-auto from-[#1c4462] to-[#509cb7]">
             <div className="flex flex-col  p-10 w-2/3">
                 {stations.map((s) => <StationCard key={s.stationuuid} station={s}/>)}
             </div>
