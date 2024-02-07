@@ -31,6 +31,7 @@ export const StationCard: React.FC<StationCardProps> = ({station, isPlaying, tog
                     </button>
                     {isPlaying && (<audio className="hidden" controls autoPlay>
                         <source src={station.url} type="audio/mpeg"/>
+                        <track hidden={true}/>
                     </audio>)}
                 </div>
             </div>
