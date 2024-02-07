@@ -6,5 +6,4 @@ export type Station = {
     favicon: string;
     countrycode: string;
     votes: number;
-
 };
