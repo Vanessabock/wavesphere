@@ -1,18 +1,20 @@
 import {Station} from "../types/Station.ts";
-import React, {useState} from "react";
+import React from "react";
 import placeholderRadio from "./../assets/radio-placeholder.png"
 import {PauseIcon} from "./pause-icon.tsx";
 import {PlayIcon} from "./play-icon.tsx";
 
 type StationCardProps = {
     station: Station
+    isPlaying: boolean
+    togglePlayPause: (station: Station) => void
 }
 
-export const StationCard: React.FC<StationCardProps> = ({station}) => {
-    const [isPlaying, setIsPlaying] = useState<boolean>(false)
+export const StationCard: React.FC<StationCardProps> = ({station, isPlaying, togglePlayPause}) => {
+    //const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
     const toggleRadio = () => {
-        setIsPlaying(!isPlaying)
+        togglePlayPause(station)
     }
 
     return (
@@ -25,8 +27,7 @@ export const StationCard: React.FC<StationCardProps> = ({station}) => {
                 </div>
                 <div>
                     <button className="flex border-opacity-0" onClick={toggleRadio}>
-                        {isPlaying ? <PauseIcon/> : <PlayIcon/>
-                        }
+                        {isPlaying ? <PauseIcon/> : <PlayIcon/>}
                     </button>
                     {isPlaying && (<audio className="hidden" controls autoPlay>
                         <source src={station.url} type="audio/mpeg"/>
