@@ -3,6 +3,7 @@ import React from "react";
 import placeholderRadio from "./../assets/radio-placeholder.png"
 import {PauseIcon} from "./pause-icon.tsx";
 import {PlayIcon} from "./play-icon.tsx";
+import {WebsiteLinkIcon} from "./website-link-icon.tsx";
 
 type StationCardProps = {
     station: Station
@@ -11,7 +12,6 @@ type StationCardProps = {
 }
 
 export const StationCard: React.FC<StationCardProps> = ({station, isPlaying, togglePlayPause}) => {
-    //const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
     const toggleRadio = () => {
         togglePlayPause(station)
@@ -24,9 +24,10 @@ export const StationCard: React.FC<StationCardProps> = ({station, isPlaying, tog
                     <img src={station.favicon || placeholderRadio} alt="RadioImage"
                          className="flex h-7 mr-5 select-none object-contain"/>
                     <p className="pt-1"> {station.name} </p>
+                    <a className="border-transparent cursor-pointer pl-3 pt-2" href={station.homepage} target="_blank"><WebsiteLinkIcon/></a>
                 </div>
                 <div>
-                    <button className="flex border-opacity-0" onClick={toggleRadio}>
+                    <button className="flex border-transparent" onClick={toggleRadio}>
                         {isPlaying ? <PauseIcon/> : <PlayIcon/>}
                     </button>
                     {isPlaying && (<audio className="hidden" controls autoPlay>
