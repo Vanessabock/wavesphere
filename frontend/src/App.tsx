@@ -8,6 +8,7 @@ import {User} from "./types/User.ts";
 import {Login} from "./components/login.tsx";
 import SignUp from "./components/signup.tsx";
 import {StationsList} from "./components/stations-list.tsx";
+import {FavouritesList} from "./components/favourites-list.tsx";
 
 function App() {
     const navigate = useNavigate();
@@ -39,6 +40,7 @@ function App() {
               <Route path="/login" element={<Login/>}/>
               <Route path="/signup" element={<SignUp/>}/>
               <Route path="/stations" element={<StationsList user={user} updateUser={updateUser}/>}/>
+              <Route path="/favourites" element={<FavouritesList user={user} updateUser={updateUser}/>}/>
           </Routes>
       </div>
   )
