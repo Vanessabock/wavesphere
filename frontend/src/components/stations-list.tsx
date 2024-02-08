@@ -14,11 +14,13 @@ export const StationsList = () => {
         countrycode: "",
         votes: 0
     })
+    const [favourites, setFavourites] = useState<string[]>([]);
+
     //const [count, setCount] = useState<number>(5)
     const count: number = 20
 
     const togglePlayPause = (station: Station) => {
-        if(nowPlayingStation.stationuuid === station.stationuuid){
+        if (nowPlayingStation.stationuuid === station.stationuuid) {
             setNowPlayingStation({
                 stationuuid: "",
                 name: "",
@@ -33,6 +35,18 @@ export const StationsList = () => {
         }
     }
 
+    const setFavourite = (id: string): void => {
+        const updatedFavourites: string[] = [...favourites, id];
+        //updateUser({ ...user, favouriteBooks: updatedFavourites });
+        setFavourites(updatedFavourites);
+    };
+
+    const removeFavourite = (id: string): void => {
+        const updatedFavourites: string[] = favourites.filter((bookId) => bookId !== id);
+        //updateUser({ ...user, favouriteBooks: updatedFavourites });
+        setFavourites(updatedFavourites);
+    };
+
     useEffect(() => {
         axios.get(`/api/radioStations?count=${count}`).then((response) => {
             setStations(response.data)
@@ -42,7 +56,12 @@ export const StationsList = () => {
     return (
         <div className="flex justify-center bg-gradient-to-br min-h-screen bg-auto from-[#1c4462] to-[#509cb7]">
             <div className="flex flex-col  p-10 w-2/3">
-                {stations.map((s) => <StationCard key={s.stationuuid} station={s} isPlaying={s.stationuuid === nowPlayingStation.stationuuid} togglePlayPause={togglePlayPause}/>)}
+                {stations.map((s) => <StationCard key={s.stationuuid} station={s}
+                                                  isPlaying={s.stationuuid === nowPlayingStation.stationuuid}
+                                                  togglePlayPause={togglePlayPause}
+                                                  isFavourite={favourites.includes(s.stationuuid)}
+                                                  removeFavourite={removeFavourite}
+                                                  setFavourite={setFavourite}/>)}
             </div>
         </div>
     )
