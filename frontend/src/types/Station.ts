@@ -4,6 +4,4 @@ export type Station = {
     url: string;
     homepage: string;
     favicon: string;
-    countrycode: string;
-    votes: number;
 };
