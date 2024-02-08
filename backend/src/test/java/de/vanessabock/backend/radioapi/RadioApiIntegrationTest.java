@@ -149,18 +149,14 @@ public class RadioApiIntegrationTest {
                                  "name": "MANGORADIO",
                                  "url": "http://stream.mangoradio.de/",
                                  "homepage": "https://mangoradio.de/",
-                                 "favicon": "",
-                                 "countrycode": "DE",
-                                 "votes": 673375
+                                 "favicon": ""
                              },
                              {
                                  "stationuuid": "962cc6df-0601-11e8-ae97-52543be04c81",
                                  "name": "Dance Wave!",
                                  "url": "https://dancewave.online/dance.mp3",
                                  "homepage": "https://dancewave.online/",
-                                 "favicon": "https://dancewave.online/dw_logo.png",
-                                 "countrycode": "HU",
-                                 "votes": 461199
+                                 "favicon": "https://dancewave.online/dw_logo.png"
                              }
                          ]
                         """))

@@ -1,5 +1,6 @@
 package de.vanessabock.backend.user.model;
 
+import de.vanessabock.backend.radioapi.model.Station;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
@@ -9,6 +10,6 @@ public record User(
         String id,
         int githubId,
         String name,
-        List<String> favouriteStations
+        List<Station> favouriteStations
 ) {
 }
