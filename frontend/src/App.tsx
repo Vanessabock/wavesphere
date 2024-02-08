@@ -15,14 +15,21 @@ function App() {
     const [user, setUser] = useState<User>(null);
 
     useEffect(() => {
-        axios.get("/api/user").then((response) => setUser(response.data));
+        axios.get("/api/user").then((response) => {setUser(response.data)});
     }, []);
 
-    const logout = () =>
+    const logout = () => {
         axios.get("/api/logout").then(() => {
             setUser(null);
             navigate("/");
         });
+    }
+
+    const updateUser = (updatedUser: User) => {
+        axios.put("/api/user", updatedUser).then((response) => response.data);
+        setUser(updatedUser);
+    };
+
 
   return (
       <div className="flex min-h-screen flex-col">
@@ -31,7 +38,7 @@ function App() {
               <Route path="/" element={<Home/>}/>
               <Route path="/login" element={<Login/>}/>
               <Route path="/signup" element={<SignUp/>}/>
-              <Route path="/stations" element={<StationsList/>}/>
+              <Route path="/stations" element={<StationsList user={user} updateUser={updateUser}/>}/>
           </Routes>
       </div>
   )
