@@ -6,17 +6,13 @@ public class Station {
     String url;
     String homepage;
     String favicon;
-    String countrycode;
-    int votes;
 
-    public Station(String stationuuid, String name, String url, String homepage, String favicon, String countrycode, int votes) {
+    public Station(String stationuuid, String name, String url, String homepage, String favicon) {
         this.stationuuid = stationuuid;
         this.name = name;
         this.url = url;
         this.homepage = homepage;
         this.favicon = favicon;
-        this.countrycode = countrycode;
-        this.votes = votes;
     }
 
     public String getStationuuid() {
@@ -39,14 +35,6 @@ public class Station {
         return favicon;
     }
 
-    public String getCountrycode() {
-        return countrycode;
-    }
-
-    public int getVotes() {
-        return votes;
-    }
-
     @Override
     public String toString() {
         return "Station{" +
@@ -55,8 +43,6 @@ public class Station {
                 ", url='" + url + '\'' +
                 ", homepage='" + homepage + '\'' +
                 ", favicon='" + favicon + '\'' +
-                ", countrycode='" + countrycode + '\'' +
-                ", votes=" + votes +
                 '}';
     }
 }

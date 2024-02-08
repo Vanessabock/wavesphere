@@ -1,6 +1,6 @@
 export const PauseIcon = () => {
     return (
-        <svg strokeWidth="30px"
+        <svg width="30px"
              height="30px"
              viewBox="0 0 24 24"
              fill="none"

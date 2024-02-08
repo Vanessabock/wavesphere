@@ -124,8 +124,8 @@ public class RadioApiServiceTest {
         List<Station> actual = radioApiService.getStationsOrderedByVotes("2");
 
         //THEN
-        assertEquals(List.of(new Station("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "http://stream.mangoradio.de/", "https://mangoradio.de/", "", "DE", 673375),
-                new Station("962cc6df-0601-11e8-ae97-52543be04c81", "Dance Wave!", "https://dancewave.online/dance.mp3", "https://dancewave.online/", "https://dancewave.online/dw_logo.png", "HU", 461199)).toString(),
+        assertEquals(List.of(new Station("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "http://stream.mangoradio.de/", "https://mangoradio.de/", ""),
+                new Station("962cc6df-0601-11e8-ae97-52543be04c81", "Dance Wave!", "https://dancewave.online/dance.mp3", "https://dancewave.online/", "https://dancewave.online/dw_logo.png")).toString(),
                 actual.toString());
     }
 
