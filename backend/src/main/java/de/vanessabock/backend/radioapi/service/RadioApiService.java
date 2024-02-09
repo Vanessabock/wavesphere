@@ -33,4 +33,19 @@ public class RadioApiService {
 
         return Arrays.asList(response);
     }
+
+    public List<Station> getStationsWithSearchName(String count, String search) {
+        Station[] response;
+
+        response = restClient.get()
+                .uri("/search?order=votes&reverse=true&limit=" + count + "&tag=&name=" + search)
+                .retrieve()
+                .body(Station[].class);
+
+        if (response == null){
+            return new ArrayList<>();
+        }
+
+        return Arrays.asList(response);
+    }
 }
