@@ -11,8 +11,7 @@ type StationCardProps = {
     isPlaying: boolean
     togglePlayPause: (station: Station) => void
     isFavourite: boolean;
-    removeFavourite: (station: Station) => void;
-    setFavourite: (station: Station) => void;
+    toggleFavourite: (station: Station) => void;
 }
 
 export const StationCard: React.FC<StationCardProps> = ({
@@ -20,16 +19,15 @@ export const StationCard: React.FC<StationCardProps> = ({
                                                             isPlaying,
                                                             togglePlayPause,
                                                             isFavourite,
-                                                            removeFavourite,
-                                                            setFavourite
+                                                            toggleFavourite
                                                         }) => {
 
     const toggleRadio = () => {
         togglePlayPause(station)
     }
 
-    const toggleFavourite = () => {
-        isFavourite ? removeFavourite(station) : setFavourite(station);
+    const toggleHeart = () => {
+        toggleFavourite(station)
     };
 
     return (
@@ -43,7 +41,7 @@ export const StationCard: React.FC<StationCardProps> = ({
                        target="_blank"><WebsiteLinkIcon/></a>
                 </div>
                 <div className="flex flex-row ">
-                    <button className="border-transparent mr-2" onClick={toggleFavourite}><FavouriteIcon
+                    <button className="border-transparent mr-2" onClick={toggleHeart}><FavouriteIcon
                         isActive={isFavourite}/></button>
                     <button className="border-transparent" onClick={toggleRadio}>
                         {isPlaying ? <PauseIcon/> : <PlayIcon/>}
