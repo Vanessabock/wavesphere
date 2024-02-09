@@ -1,8 +1,14 @@
-export const PlayIcon = () => {
+import React from "react";
+
+type PlayIconProps = {
+    size: string
+}
+
+export const PlayIcon: React.FC<PlayIconProps> = ({size}) => {
     return (
         <svg
-            width="30px"
-            height="30px"
+            width={size}
+            height={size}
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">

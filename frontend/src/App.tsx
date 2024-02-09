@@ -70,7 +70,7 @@ function App() {
                                                                  showFavourites={true} updateUser={updateUser}
                                                                  togglePlayPause={togglePlayPause}/>}/>
             </Routes>
-            <NowPlaying nowPlayingStation={nowPlayingStation}/>
+            <NowPlaying nowPlayingStation={nowPlayingStation} />
         </div>
     )
 }
