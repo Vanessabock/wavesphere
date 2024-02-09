@@ -25,7 +25,9 @@ function App() {
     })
 
     useEffect(() => {
-        axios.get("/api/user").then((response) => {setUser(response.data)});
+        axios.get("/api/user").then((response) => {
+            setUser(response.data)
+        });
         user && setFavourites(user.favouriteStations);
     }, [user]);
 
@@ -57,7 +59,7 @@ function App() {
 
     const toggleFavourite = (station: Station): void => {
         let updatedFavourites: Station[];
-        if(favourites.some(fav => fav.stationuuid === station.stationuuid)){
+        if (favourites.some(fav => fav.stationuuid === station.stationuuid)) {
             updatedFavourites = favourites.filter((s) => s.stationuuid !== station.stationuuid);
         } else {
             updatedFavourites = [...favourites, station];
@@ -68,19 +70,23 @@ function App() {
         setFavourites(updatedFavourites);
     };
 
-  return (
-      <div className="flex min-h-screen flex-col">
-          <Header isLoggedIn={!!user} logout={logout}/>
-          <Routes>
-              <Route path="/" element={<Home/>}/>
-              <Route path="/login" element={<Login/>}/>
-              <Route path="/signup" element={<SignUp/>}/>
-              <Route path="/stations" element={<StationsList nowPlaying={nowPlayingStation} favourites={favourites} showFavourites={false} togglePlayPause={togglePlayPause} toggleFavourite={toggleFavourite}/>}/>
-              <Route path="/favourites" element={<StationsList nowPlaying={nowPlayingStation} favourites={favourites} showFavourites={true} togglePlayPause={togglePlayPause} toggleFavourite={toggleFavourite}/>}/>
-          </Routes>
-          <NowPlaying nowPlayingStation={nowPlayingStation}/>
-      </div>
-  )
+    return (
+        <div className="flex min-h-screen flex-col">
+            <Header isLoggedIn={!!user} logout={logout}/>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/signup" element={<SignUp/>}/>
+                <Route path="/stations" element={<StationsList nowPlaying={nowPlayingStation} favourites={favourites}
+                                                               showFavourites={false} togglePlayPause={togglePlayPause}
+                                                               toggleFavourite={toggleFavourite}/>}/>
+                <Route path="/favourites" element={<StationsList nowPlaying={nowPlayingStation} favourites={favourites}
+                                                                 showFavourites={true} togglePlayPause={togglePlayPause}
+                                                                 toggleFavourite={toggleFavourite}/>}/>
+            </Routes>
+            <NowPlaying nowPlayingStation={nowPlayingStation}/>
+        </div>
+    )
 }
 
 export default App

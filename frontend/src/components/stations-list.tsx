@@ -11,11 +11,16 @@ type StationsListProps = {
     toggleFavourite: (station: Station) => void;
 }
 
-export const StationsList: React.FC<StationsListProps> = ({nowPlaying, favourites,showFavourites, togglePlayPause, toggleFavourite}) => {
+export const StationsList: React.FC<StationsListProps> = ({
+                                                              nowPlaying,
+                                                              favourites,
+                                                              showFavourites,
+                                                              togglePlayPause,
+                                                              toggleFavourite
+                                                          }) => {
     const [stations, setStations] = useState<Station[]>([])
     //const [count, setCount] = useState<number>(5)
     const count: number = 20
-
 
 
     useEffect(() => {
@@ -36,10 +41,10 @@ export const StationsList: React.FC<StationsListProps> = ({nowPlaying, favourite
             </div>)}
             {showFavourites && (<div className="flex flex-col  p-10 w-2/3">
                 {favourites.map((s) => <StationCard key={s.stationuuid} station={s}
-                                                  isPlaying={s.stationuuid === nowPlaying.stationuuid}
-                                                  togglePlayPause={togglePlayPause}
-                                                  isFavourite={favourites.some(fav => fav.stationuuid === s.stationuuid)}
-                                                  toggleFavourite={toggleFavourite}/>)}
+                                                    isPlaying={s.stationuuid === nowPlaying.stationuuid}
+                                                    togglePlayPause={togglePlayPause}
+                                                    isFavourite={favourites.some(fav => fav.stationuuid === s.stationuuid)}
+                                                    toggleFavourite={toggleFavourite}/>)}
 
             </div>)}
         </div>
