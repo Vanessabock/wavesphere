@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {Station} from "../types/Station.ts";
 import axios from "axios";
 import {StationCard} from "./station-card.tsx";
