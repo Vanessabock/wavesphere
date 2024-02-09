@@ -17,10 +17,10 @@ export const NowPlaying: React.FC<NowPlayingProps> = ({nowPlayingStation, toggle
     return (
         <>
             {nowPlayingStation.stationuuid && (
-                <div className="flex bottom-0 sticky justify-center h-40 w-full bg-[#17233c] text-[#f8f1e6]">
-                    {nowPlayingStation.name}
-                    <button className="border-transparent" onClick={toggleRadio}>
-                        {!!nowPlayingStation.stationuuid ? <PauseIcon size={"30px"}/> : <PlayIcon size={"30px"}/>}
+                <div className="flex flex-col bottom-0 sticky h-40 w-full bg-[#17233c] text-[#f8f1e6] text-2xl">
+                    <div className="flex justify-center m-4">{nowPlayingStation.name}</div>
+                    <button className="flex justify-center border-transparent" onClick={toggleRadio}>
+                        {!!nowPlayingStation.stationuuid ? <PauseIcon size={"50px"}/> : <PlayIcon size={"50px"}/>}
                     </button>
                 </div>)}
         </>
