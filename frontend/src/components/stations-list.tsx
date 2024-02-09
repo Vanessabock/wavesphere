@@ -67,7 +67,9 @@ export const StationsList: React.FC<StationsListProps> = ({
                                                     toggleFavourite={toggleFavourite}/>)}
 
             </div>)}
-            <button className="flex bg-[#f8f1e6] p-1 m-5 mb-10 text-[#17233c]" onClick={onShowMore}> Show more</button>
+            {!showFavourites && (
+                <button className="flex bg-[#f8f1e6] p-1 m-5 mb-10 text-[#17233c]" onClick={onShowMore}> Show
+                    more</button>)}
         </div>
     )
 }
