@@ -5,9 +5,6 @@ import de.vanessabock.backend.user.repository.UserRepo;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
 @Service
 public class UserService {
     public final UserRepo userRepo;
@@ -27,14 +24,7 @@ public class UserService {
             return null;
         }
 
-        boolean hasUser = userRepo.existsUserByGithubId(githubId);
-
-        if (!hasUser) {
-            String name = user.getAttribute("login");
-            return userRepo.save(new User(UUID.randomUUID().toString(), githubId, name, new ArrayList<>()));
-        }
-
-        return userRepo.findUserByGithubId(githubId);
+        return userRepo.findUserByGithubId(githubId.toString());
     }
 
     public User updateUser(User user){
