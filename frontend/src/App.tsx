@@ -6,7 +6,6 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {User} from "./types/User.ts";
 import {Login} from "./components/login.tsx";
-import SignUp from "./components/signup.tsx";
 import {StationsList} from "./components/stations-list.tsx";
 import {Station} from "./types/Station.ts";
 import {NowPlaying} from "./components/now-playing.tsx";
@@ -62,7 +61,6 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/signup" element={<SignUp/>}/>
                 <Route path="/stations" element={<StationsList user={user} nowPlaying={nowPlayingStation}
                                                                showFavourites={false} updateUser={updateUser}
                                                                togglePlayPause={togglePlayPause}/>}/>
