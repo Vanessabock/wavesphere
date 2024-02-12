@@ -26,11 +26,17 @@ export const StationsList: React.FC<StationsListProps> = ({
 
 
     useEffect(() => {
-        axios.get(`/api/radioStations?count=${count}`).then((response) => {
-            setStations(response.data)
-        })
+        if (search){
+            axios.get(`/api/radioStations/${search}?count=${count}`).then((response) => {
+                setStations(response.data)
+            })
+        } else {
+            axios.get(`/api/radioStations?count=${count}`).then((response) => {
+                setStations(response.data)
+            })
+        }
         user && setFavourites(user.favouriteStations);
-    }, [user]);
+    }, [user, count]);
 
     const onSearch = (event: { preventDefault: () => void; }) => {
         axios.get(`/api/radioStations/${search}?count=${count}`).then((response) => {

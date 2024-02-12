@@ -34,7 +34,7 @@ public class RadioApiService {
         return Arrays.asList(response);
     }
 
-    public List<Station> getStationsWithSearchName(String count, String search) {
+    public List<Station> getStationsBySearchName(String count, String search) {
         Station[] response;
 
         response = restClient.get()

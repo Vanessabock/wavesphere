@@ -168,7 +168,7 @@ public class RadioApiIntegrationTest {
 
     @DirtiesContext
     @Test
-    void getStationsWithSearchNameTest_WhenCount_ThenReturnListOfCountStations() throws Exception {
+    void getStationsBySearchNameTest_WhenCountAndSearch_ThenReturnListOfCountStations() throws Exception {
         //GIVEN
         mockWebServer.enqueue(new MockResponse()
                 .addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)

@@ -145,7 +145,7 @@ public class RadioApiServiceTest {
 
     @DirtiesContext
     @Test
-    void getStationsWithSearchNameTest_WhenCount_ThenReturnListOfCountStations() {
+    void getStationsBySearchNameTest_WhenCountAndSearch_ThenReturnListOfCountStations() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse().addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).setBody("""
                 [
@@ -229,7 +229,7 @@ public class RadioApiServiceTest {
                 """));
 
         //WHEN
-        List<Station> actual = radioApiService.getStationsWithSearchName("mango", "2");
+        List<Station> actual = radioApiService.getStationsBySearchName("mango", "2");
 
         //THEN
         assertEquals(List.of(new Station("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "http://stream.mangoradio.de/", "https://mangoradio.de/", ""),
@@ -239,12 +239,12 @@ public class RadioApiServiceTest {
 
     @DirtiesContext
     @Test
-    void getStationsWithSearchNameTest_WhenResponseNull_ThenReturnEmptyList() {
+    void getStationsBySearchNameTest_WhenResponseNull_ThenReturnEmptyList() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse().addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).setBody(""));
 
         //WHEN
-        List<Station> actual = radioApiService.getStationsWithSearchName("mango","2");
+        List<Station> actual = radioApiService.getStationsBySearchName("mango","2");
 
         //THEN
         assertEquals(new ArrayList<>().toString(),
