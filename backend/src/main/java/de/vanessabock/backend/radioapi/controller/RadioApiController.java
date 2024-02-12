@@ -20,4 +20,9 @@ public class RadioApiController {
     public List<Station> getStationsOrderedByVotes(@RequestParam String count) {
         return radioApiService.getStationsOrderedByVotes(count);
     }
+
+    @GetMapping("/{search}")
+    public List<Station> getStationsBySearchName(@PathVariable String search, @RequestParam String count){
+        return radioApiService.getStationsBySearchName(count, search);
+    }
 }
