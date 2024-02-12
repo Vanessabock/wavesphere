@@ -1,7 +1,13 @@
-export const PauseIcon = () => {
+import React from "react";
+
+type PauseIconProps = {
+    size: string
+}
+
+export const PauseIcon: React.FC<PauseIconProps> = ({size}) => {
     return (
-        <svg width="30px"
-             height="30px"
+        <svg width={size}
+             height={size}
              viewBox="0 0 24 24"
              fill="none"
              xmlns="http://www.w3.org/2000/svg">
