@@ -21,9 +21,6 @@ export const UserMenu: React.FC<UserMenuProps> = ({isLoggedIn, className, logout
             <Link onClick={toggleMenu} to="/login">
                 <button className="h-8 w-full rounded-lg text-[#17233c] px-3">Log In</button>
             </Link>
-            <Link onClick={toggleMenu} to="/signup">
-                <button className="h-8 w-full rounded-lg bg-[#17233c] px-3 text-white">Sign Up</button>
-            </Link>
         </div>
     );
 };
