@@ -81,8 +81,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: push-to-docker-hub
     environment:
-      name: Wavesphere # Capstone Project name
-      url: https://wavesphere-app.onrender.com/ # Link to deployment
+      name: wavesphere # Capstone Project name
+      url: https://wavesphere.onrender.com/ # Link to deployment
     steps:
       - name: Trigger Render.com Deployment
         run: |
