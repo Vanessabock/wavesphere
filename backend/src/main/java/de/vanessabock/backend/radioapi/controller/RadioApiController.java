@@ -22,7 +22,7 @@ public class RadioApiController {
     }
 
     @GetMapping("/{search}")
-    public List<Station> getStationsWithSearchName(@PathVariable String search, @RequestParam String count){
-        return radioApiService.getStationsWithSearchName(count, search);
+    public List<Station> getStationsBySearchName(@PathVariable String search, @RequestParam String count){
+        return radioApiService.getStationsBySearchName(count, search);
     }
 }
