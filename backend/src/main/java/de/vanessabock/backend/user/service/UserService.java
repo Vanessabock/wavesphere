@@ -18,13 +18,13 @@ public class UserService {
             return null;
         }
 
-        Integer githubId = user.getAttribute("id");
+        Long githubId = user.getAttribute("id");
 
         if(githubId == null){
             return null;
         }
 
-        return userRepo.findUserByGithubId(githubId.toString());
+        return userRepo.findUserByGithubId(githubId);
     }
 
     public User updateUser(User user){

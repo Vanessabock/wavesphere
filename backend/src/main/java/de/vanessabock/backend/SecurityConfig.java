@@ -52,7 +52,7 @@ public class SecurityConfig {
                             c.defaultSuccessUrl("http://localhost:5173", true);
                         }
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        throw new IllegalStateException(e);
                     }
                 })
                 .exceptionHandling(exceptionHandlingConfigurer ->
@@ -67,10 +67,10 @@ public class SecurityConfig {
         return request -> {
             OAuth2User user = delegate.loadUser(request);
 
-            boolean hasUser = userRepo.existsUserByGithubId(user.getAttributes().get("id").toString());
+            boolean hasUser = userRepo.existsUserByGithubId(user.getAttribute("id"));
 
             if (!hasUser) {
-                User newUser = new User(UUID.randomUUID().toString(), user.getAttributes().get("id").toString(), user.getAttribute("login"), new ArrayList<>());
+                User newUser = new User(UUID.randomUUID().toString(),user.getAttribute("id"), user.getAttribute("login"), new ArrayList<>());
                 userRepo.save(newUser);
             }
 
