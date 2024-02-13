@@ -23,7 +23,7 @@ class UserServiceTest {
 
 
     @Test
-    void getLoggedInUser_ShouldReturnNull_WhenUserIsNull() {
+    void getLoggedInUserTest_ShouldReturnNull_WhenUserIsNull() {
         //GIVEN
         //WHEN
         User result = userService.getLoggedInUser(null);
@@ -34,7 +34,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getLoggedInUser_ShouldReturnNull_WhenGithubIdIsNull() {
+    void getLoggedInUserTest_ShouldReturnNull_WhenGithubIdIsNull() {
         //GIVEN
         OAuth2User user = mock(OAuth2User.class);
         when(user.getAttribute("id")).thenReturn(null);
@@ -48,54 +48,30 @@ class UserServiceTest {
     }
 
     @Test
-    void getLoggedInUser_ShouldSaveNewUser_WhenUserNotInDatabase() {
+    void getUserTest_ShouldReturnExistingUser_WhenUserInDatabase() {
         //GIVEN
         OAuth2User user = mock(OAuth2User.class);
-        int id = 123456;
+        Integer id = 123456;
         String name = "User";
         when(user.getAttribute("id")).thenReturn(id);
+        when(userRepo.existsUserByGithubId(id.toString())).thenReturn(true);
         when(user.getAttribute("name")).thenReturn(name);
-        when(userRepo.existsUserByGithubId(id)).thenReturn(false);
-
-        User expected = new User("generatedId", id, name, new ArrayList<>());
-        when(userRepo.save(any(User.class))).thenReturn(expected);
+        User expected = new User("existingId", id.toString(), name, new ArrayList<>());
+        when(userRepo.findUserByGithubId(id.toString())).thenReturn(expected);
 
         //WHEN
         User actual = userService.getLoggedInUser(user);
 
         //THEN
         assertEquals(expected, actual);
-        verify(userRepo, times(1)).existsUserByGithubId(id);
-        verify(userRepo, times(1)).save(any(User.class));
-        verifyNoMoreInteractions(userRepo);
-    }
-
-    @Test
-    void getUserShouldReturnExistingUserWhenUserInDatabase() {
-        //GIVEN
-        OAuth2User user = mock(OAuth2User.class);
-        int id = 123456;
-        String name = "User";
-        when(user.getAttribute("id")).thenReturn(id);
-        when(userRepo.existsUserByGithubId(id)).thenReturn(true);
-        when(user.getAttribute("name")).thenReturn(name);
-        User expected = new User("existingId", id, name, new ArrayList<>());
-        when(userRepo.findUserByGithubId(id)).thenReturn(expected);
-
-        //WHEN
-        User actual = userService.getLoggedInUser(user);
-
-        //THEN
-        assertEquals(expected, actual);
-        verify(userRepo, times(1)).existsUserByGithubId(id);
-        verify(userRepo, times(1)).findUserByGithubId(id);
+        verify(userRepo, times(1)).findUserByGithubId(id.toString());
         verifyNoMoreInteractions(userRepo);
     }
 
     @Test
     void updateUserTest_ShouldSaveUserToDatabaseAndReturnUser_WhenUserIsUpdated() {
         //GIVEN
-        User expected = new User("123", 123423, "User", new ArrayList<>());
+        User expected = new User("123", "123423", "User", new ArrayList<>());
         when(userRepo.save(any(User.class))).thenReturn(expected);
 
         //WHEN

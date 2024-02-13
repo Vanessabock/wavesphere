@@ -14,10 +14,10 @@ type HeaderProps = {
 };
 
 export const Header: React.FC<HeaderProps> = ({isLoggedIn, logout}) => {
-    const menuItems: { name: string; href: string }[] = [{name: "Home", href: "/"}];
+    const menuItems: { name: string; href: string }[] = [{name: "Home", href: "/"},
+        {name: "Radio Stations", href: "/stations"}];
 
-    const loggedInMenuItems: { name: string; href: string }[] = [{name: "Radio Stations", href: "/stations"},
-        {name: "Favourites", href: "/favourites"}];
+    const loggedInMenuItems: { name: string; href: string }[] = [{name: "Favourites", href: "/favourites"}];
 
     if (isLoggedIn) {
         menuItems.push(...loggedInMenuItems);

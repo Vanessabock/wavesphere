@@ -5,6 +5,7 @@ export const Login = () => {
         ? "/oauth2/authorization/github"
         : "http://localhost:8080/oauth2/authorization/github";
 
+
     return (
         <div className="mx-auto flex flex-1 items-center justify-center pb-20">
             <button className="flex h-max items-center rounded-lg px-5 py-4 text-xl font-light">
