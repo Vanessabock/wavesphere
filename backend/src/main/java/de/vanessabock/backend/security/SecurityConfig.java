@@ -1,4 +1,4 @@
-package de.vanessabock.backend;
+package de.vanessabock.backend.security;
 
 import de.vanessabock.backend.user.model.User;
 import de.vanessabock.backend.user.repository.UserRepo;
@@ -52,7 +52,7 @@ public class SecurityConfig {
                             c.defaultSuccessUrl("http://localhost:5173", true);
                         }
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        throw new IllegalStateException(e);
                     }
                 })
                 .exceptionHandling(exceptionHandlingConfigurer ->
@@ -67,15 +67,29 @@ public class SecurityConfig {
         return request -> {
             OAuth2User user = delegate.loadUser(request);
 
-            boolean hasUser = userRepo.existsUserByGithubId(user.getAttributes().get("id").toString());
-
-            if (!hasUser) {
-                User newUser = new User(UUID.randomUUID().toString(), user.getAttributes().get("id").toString(), user.getAttribute("login"), new ArrayList<>());
-                userRepo.save(newUser);
+            if (saveNewUser(user)){
+                return user;
             }
 
-            return user;
+            return null;
         };
+    }
+
+    protected boolean saveNewUser(OAuth2User user) {
+        Integer githubId = user.getAttribute("id");
+
+        if (githubId == null){
+            return false;
+        }
+
+        boolean hasUser = userRepo.existsUserByGithubId(githubId.toString());
+
+        if (!hasUser) {
+            User newUser = new User(UUID.randomUUID().toString(), githubId.toString(), user.getAttribute("login"), new ArrayList<>());
+            userRepo.save(newUser);
+        }
+
+        return true;
     }
 
 }
