@@ -8,7 +8,7 @@ import java.util.List;
 public record User(
         @Id
         String id,
-        String githubId,
+        Long githubId,
         String name,
         List<Station> favouriteStations
 ) {

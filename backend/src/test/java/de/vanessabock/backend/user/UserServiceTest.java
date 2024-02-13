@@ -51,9 +51,9 @@ class UserServiceTest {
     void getUserTest_ShouldReturnExistingUser_WhenUserInDatabase() {
         //GIVEN
         OAuth2User user = mock(OAuth2User.class);
-        String id = "123456";
+        Long id = 123456L;
         String name = "User";
-        when(user.getAttribute("id")).thenReturn(123456);
+        when(user.getAttribute("id")).thenReturn(id);
         when(userRepo.existsUserByGithubId(id)).thenReturn(true);
         when(user.getAttribute("name")).thenReturn(name);
         User expected = new User("existingId", id, name, new ArrayList<>());
@@ -71,7 +71,7 @@ class UserServiceTest {
     @Test
     void updateUserTest_ShouldSaveUserToDatabaseAndReturnUser_WhenUserIsUpdated() {
         //GIVEN
-        User expected = new User("123", "123423", "User", new ArrayList<>());
+        User expected = new User("123", 123423L, "User", new ArrayList<>());
         when(userRepo.save(any(User.class))).thenReturn(expected);
 
         //WHEN
