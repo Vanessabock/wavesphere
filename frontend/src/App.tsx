@@ -21,6 +21,7 @@ function App() {
         homepage: "",
         favicon: ""
     })
+    const [stationOnNowPlayingScreen, setStationOnNowPlayingScreen] = useState<Station>(nowPlayingStation)
 
     useEffect(() => {
         axios.get("/api/user").then((response) => {
@@ -41,6 +42,9 @@ function App() {
     };
 
     const togglePlayPause = (station: Station) => {
+        if (!stationOnNowPlayingScreen.stationuuid){
+            setStationOnNowPlayingScreen(station)
+        }
         if (nowPlayingStation.stationuuid === station.stationuuid) {
             setNowPlayingStation({
                 stationuuid: "",
@@ -51,6 +55,7 @@ function App() {
             })
         } else {
             setNowPlayingStation(station)
+            setStationOnNowPlayingScreen(station)
         }
     }
 
@@ -68,7 +73,7 @@ function App() {
                                                                  showFavourites={true} updateUser={updateUser}
                                                                  togglePlayPause={togglePlayPause}/>}/>
             </Routes>
-            <NowPlaying nowPlayingStation={nowPlayingStation} togglePlayPause={togglePlayPause}/>
+            <NowPlaying nowPlayingStation={nowPlayingStation} stationOnNowPlayingScreen={stationOnNowPlayingScreen} togglePlayPause={togglePlayPause}/>
         </div>
     )
 }
