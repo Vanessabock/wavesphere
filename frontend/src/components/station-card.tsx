@@ -46,9 +46,6 @@ export const StationCard: React.FC<StationCardProps> = ({
                     <button className="border-transparent" onClick={toggleRadio}>
                         {isPlaying ? <PauseIcon size={"30px"}/> : <PlayIcon size={"30px"}/>}
                     </button>
-                    {isPlaying && (<audio className="hidden" controls autoPlay>
-                        <source src={station.url} type="audio/mpeg"/>
-                    </audio>)}
                 </div>
             </div>
             <div
