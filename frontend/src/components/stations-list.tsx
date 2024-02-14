@@ -24,7 +24,6 @@ export const StationsList: React.FC<StationsListProps> = ({
     const [count, setCount] = useState<number>(20)
     const [search, setSearch] = useState<string>("")
 
-
     useEffect(() => {
         if (search){
             axios.get(`/api/radioStations/${search}?count=${count}`).then((response) => {
