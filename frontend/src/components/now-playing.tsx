@@ -16,7 +16,7 @@ export const NowPlaying: React.FC<NowPlayingProps> = ({
                                                           togglePlayPause,
                                                       }) => {
 
-    const audioPlayer = useRef<HTMLAudioElement>();
+    const audioPlayer = useRef<HTMLAudioElement>(null);
     const [volume, setVolume] = useState<number>(0.5)
 
     useEffect(() => {
