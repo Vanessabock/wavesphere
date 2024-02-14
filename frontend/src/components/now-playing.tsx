@@ -22,7 +22,7 @@ export const NowPlaying: React.FC<NowPlayingProps> = ({
     const [volume, setVolume] = useState<number>(0.5)
 
     useEffect(() => {
-        if (!!audioPlayer.current){
+        if (audioPlayer.current){
             audioPlayer.current.volume = volume;
         }
     }, [volume]);
