@@ -37,7 +37,7 @@ class RadioStationControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         [{
-                             "id": "1234",
+                             "stationuuid": "1234",
                              "name": "Radio",
                              "url": "www.radio.mp3",
                              "homepage": "www.radio.com",

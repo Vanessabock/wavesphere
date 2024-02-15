@@ -29,9 +29,6 @@ class UserControllerIntegrationTest {
     @Autowired
     private UserRepo userRepo;
 
-    @Autowired
-    private RadioStationRepo radioStationRepo;
-
     @Test
     void getLoggedInUserTest_shouldReturnUser_whenUserLoggedIn() throws Exception {
         //GIVEN
