@@ -1,7 +1,6 @@
 package de.vanessabock.backend.user.model;
 
-import de.vanessabock.backend.radioapi.model.ApiStation;
-import de.vanessabock.backend.station.model.RadioStation;
+import de.vanessabock.backend.radiostation.model.RadioStation;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;

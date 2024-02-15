@@ -1,7 +1,7 @@
-package de.vanessabock.backend.station.service;
+package de.vanessabock.backend.radiostation.service;
 
-import de.vanessabock.backend.station.model.RadioStation;
-import de.vanessabock.backend.station.repository.RadioStationRepo;
+import de.vanessabock.backend.radiostation.model.RadioStation;
+import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +15,6 @@ public class RadioStationService {
     }
 
     public List<RadioStation> getRadioStations(int limit){
-        return radioStationRepo.findAll().subList(0, limit);
+        return radioStationRepo.findAll().stream().limit(limit).toList();
     }
 }
