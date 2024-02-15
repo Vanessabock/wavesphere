@@ -1,6 +1,6 @@
 package de.vanessabock.backend.radioapi.controller;
 
-import de.vanessabock.backend.radioapi.model.Station;
+import de.vanessabock.backend.radioapi.model.ApiStation;
 import de.vanessabock.backend.radioapi.service.RadioApiService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,12 @@ public class RadioApiController {
     }
 
     @GetMapping
-    public List<Station> getStationsOrderedByVotes(@RequestParam String count) {
+    public List<ApiStation> getStationsOrderedByVotes(@RequestParam String count) {
         return radioApiService.getStationsOrderedByVotes(count);
     }
 
     @GetMapping("/{search}")
-    public List<Station> getStationsBySearchName(@PathVariable String search, @RequestParam String count){
+    public List<ApiStation> getStationsBySearchName(@PathVariable String search, @RequestParam String count){
         return radioApiService.getStationsBySearchName(count, search);
     }
 }

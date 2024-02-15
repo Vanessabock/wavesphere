@@ -1,6 +1,6 @@
 package de.vanessabock.backend.radioapi.service;
 
-import de.vanessabock.backend.radioapi.model.Station;
+import de.vanessabock.backend.radioapi.model.ApiStation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -19,13 +19,13 @@ public class RadioApiService {
                 .build();
     }
 
-    public List<Station> getStationsOrderedByVotes(String count) {
-        Station[] response;
+    public List<ApiStation> getStationsOrderedByVotes(String count) {
+        ApiStation[] response;
 
         response = restClient.get()
                 .uri("/search?order=votes&reverse=true&limit=" + count)
                 .retrieve()
-                .body(Station[].class);
+                .body(ApiStation[].class);
 
         if (response == null){
             return new ArrayList<>();
@@ -34,13 +34,13 @@ public class RadioApiService {
         return Arrays.asList(response);
     }
 
-    public List<Station> getStationsBySearchName(String count, String search) {
-        Station[] response;
+    public List<ApiStation> getStationsBySearchName(String count, String search) {
+        ApiStation[] response;
 
         response = restClient.get()
                 .uri("/search?order=votes&reverse=true&limit=" + count + "&tag=&name=" + search)
                 .retrieve()
-                .body(Station[].class);
+                .body(ApiStation[].class);
 
         if (response == null){
             return new ArrayList<>();

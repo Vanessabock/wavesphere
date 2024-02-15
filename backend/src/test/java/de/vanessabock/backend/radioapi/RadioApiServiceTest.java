@@ -1,6 +1,6 @@
 package de.vanessabock.backend.radioapi;
 
-import de.vanessabock.backend.radioapi.model.Station;
+import de.vanessabock.backend.radioapi.model.ApiStation;
 import de.vanessabock.backend.radioapi.service.RadioApiService;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -121,11 +121,11 @@ public class RadioApiServiceTest {
                 """));
 
         //WHEN
-        List<Station> actual = radioApiService.getStationsOrderedByVotes("2");
+        List<ApiStation> actual = radioApiService.getStationsOrderedByVotes("2");
 
         //THEN
-        assertEquals(List.of(new Station("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "http://stream.mangoradio.de/", "https://mangoradio.de/", ""),
-                new Station("962cc6df-0601-11e8-ae97-52543be04c81", "Dance Wave!", "https://dancewave.online/dance.mp3", "https://dancewave.online/", "https://dancewave.online/dw_logo.png")).toString(),
+        assertEquals(List.of(new ApiStation("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "http://stream.mangoradio.de/", "https://mangoradio.de/", ""),
+                new ApiStation("962cc6df-0601-11e8-ae97-52543be04c81", "Dance Wave!", "https://dancewave.online/dance.mp3", "https://dancewave.online/", "https://dancewave.online/dw_logo.png")).toString(),
                 actual.toString());
     }
 
@@ -136,7 +136,7 @@ public class RadioApiServiceTest {
         mockWebServer.enqueue(new MockResponse().addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).setBody(""));
 
         //WHEN
-        List<Station> actual = radioApiService.getStationsOrderedByVotes("2");
+        List<ApiStation> actual = radioApiService.getStationsOrderedByVotes("2");
 
         //THEN
         assertEquals(new ArrayList<>().toString(),
@@ -229,11 +229,11 @@ public class RadioApiServiceTest {
                 """));
 
         //WHEN
-        List<Station> actual = radioApiService.getStationsBySearchName("mango", "2");
+        List<ApiStation> actual = radioApiService.getStationsBySearchName("mango", "2");
 
         //THEN
-        assertEquals(List.of(new Station("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "http://stream.mangoradio.de/", "https://mangoradio.de/", ""),
-                        new Station("01e06e88-d5e0-4657-bb1f-3821c9f56fee", "Radio Mango", "https://bcovlive-a.akamaihd.net/19b535b7499a4719a5c19e043063f5d9/ap-southeast-1/6034685947001/playlist.m3u8", "https://www.radiomango.fm/", "")).toString(),
+        assertEquals(List.of(new ApiStation("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "http://stream.mangoradio.de/", "https://mangoradio.de/", ""),
+                        new ApiStation("01e06e88-d5e0-4657-bb1f-3821c9f56fee", "Radio Mango", "https://bcovlive-a.akamaihd.net/19b535b7499a4719a5c19e043063f5d9/ap-southeast-1/6034685947001/playlist.m3u8", "https://www.radiomango.fm/", "")).toString(),
                 actual.toString());
     }
 
@@ -244,7 +244,7 @@ public class RadioApiServiceTest {
         mockWebServer.enqueue(new MockResponse().addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).setBody(""));
 
         //WHEN
-        List<Station> actual = radioApiService.getStationsBySearchName("mango","2");
+        List<ApiStation> actual = radioApiService.getStationsBySearchName("mango","2");
 
         //THEN
         assertEquals(new ArrayList<>().toString(),
