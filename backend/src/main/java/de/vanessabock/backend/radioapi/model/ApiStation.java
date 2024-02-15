@@ -1,13 +1,13 @@
 package de.vanessabock.backend.radioapi.model;
 
-public class Station {
+public class ApiStation {
     String stationuuid;
     String name;
     String url;
     String homepage;
     String favicon;
 
-    public Station(String stationuuid, String name, String url, String homepage, String favicon) {
+    public ApiStation(String stationuuid, String name, String url, String homepage, String favicon) {
         this.stationuuid = stationuuid;
         this.name = name;
         this.url = url;
