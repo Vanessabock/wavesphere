@@ -17,17 +17,6 @@ public class RadioStation {
         this.favicon = favicon;
     }
 
-    @Override
-    public String toString() {
-        return "Station{" +
-                "stationuuid='" + stationuuid + '\'' +
-                ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                ", homepage='" + homepage + '\'' +
-                ", favicon='" + favicon + '\'' +
-                '}';
-    }
-
     public String getStationuuid() {
         return stationuuid;
     }
