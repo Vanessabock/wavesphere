@@ -65,7 +65,7 @@ export const StationsList: React.FC<StationsListProps> = ({
     };
 
     const onShowMore = () => {
-        setLimit(limit + 20)
+        setLimit(limit => limit + 20)
     }
 
     return (
