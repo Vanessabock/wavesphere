@@ -1,6 +1,7 @@
 package de.vanessabock.backend.radiostation.controller;
 
 import de.vanessabock.backend.radiostation.model.RadioStation;
+import de.vanessabock.backend.radiostation.model.RadioStationDto;
 import de.vanessabock.backend.radiostation.service.RadioStationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,5 +25,10 @@ public class RadioStationController {
     @GetMapping("getStationsByName/{limit}")
     public List<RadioStation> getStationsBySearchNameWithLimit(@PathVariable int limit, @RequestParam String name){
         return radioStationService.getRadioStationsBySearchName(limit, name);
+    }
+
+    @PostMapping
+    public RadioStation addBook(@RequestBody RadioStationDto radioStationDto) {
+        return radioStationService.addRadioStation(radioStationDto);
     }
 }

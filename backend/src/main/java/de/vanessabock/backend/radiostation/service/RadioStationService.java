@@ -1,10 +1,12 @@
 package de.vanessabock.backend.radiostation.service;
 
 import de.vanessabock.backend.radiostation.model.RadioStation;
+import de.vanessabock.backend.radiostation.model.RadioStationDto;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RadioStationService {
@@ -14,7 +16,7 @@ public class RadioStationService {
         this.radioStationRepo = radioStationRepo;
     }
 
-    public List<RadioStation> getRadioStations(int limit){
+    public List<RadioStation> getRadioStations(int limit) {
         return radioStationRepo.findAll().stream().limit(limit).toList();
     }
 
@@ -24,5 +26,11 @@ public class RadioStationService {
                 .filter(station -> station.getName().toLowerCase().contains(search.toLowerCase()))
                 .limit(limit)
                 .toList();
+    }
+
+    public RadioStation addRadioStation(RadioStationDto radioStationDto) {
+        return radioStationRepo.save(new RadioStation(UUID.randomUUID().toString(),
+                radioStationDto.getName(), radioStationDto.getUrl(),
+                radioStationDto.getHomepage(), radioStationDto.getFavicon()));
     }
 }
