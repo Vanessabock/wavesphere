@@ -1,6 +1,6 @@
 package de.vanessabock.backend.radioapi.service;
 
-import de.vanessabock.backend.radioapi.model.Station;
+import de.vanessabock.backend.radiostation.model.RadioStation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -19,13 +19,13 @@ public class RadioApiService {
                 .build();
     }
 
-    public List<Station> getStationsOrderedByVotes(String count) {
-        Station[] response;
+    public List<RadioStation> getStationsOrderedByVotes(String limit) {
+        RadioStation[] response;
 
         response = restClient.get()
-                .uri("/search?order=votes&reverse=true&limit=" + count)
+                .uri("/search?order=votes&reverse=true&limit=" + limit)
                 .retrieve()
-                .body(Station[].class);
+                .body(RadioStation[].class);
 
         if (response == null){
             return new ArrayList<>();
@@ -34,13 +34,13 @@ public class RadioApiService {
         return Arrays.asList(response);
     }
 
-    public List<Station> getStationsBySearchName(String count, String search) {
-        Station[] response;
+    public List<RadioStation> getStationsBySearchName(String limit, String search) {
+        RadioStation[] response;
 
         response = restClient.get()
-                .uri("/search?order=votes&reverse=true&limit=" + count + "&tag=&name=" + search)
+                .uri("/search?order=votes&reverse=true&limit=" + limit + "&tag=&name=" + search)
                 .retrieve()
-                .body(Station[].class);
+                .body(RadioStation[].class);
 
         if (response == null){
             return new ArrayList<>();
