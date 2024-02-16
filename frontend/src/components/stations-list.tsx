@@ -21,24 +21,24 @@ export const StationsList: React.FC<StationsListProps> = ({
                                                           }) => {
     const [stations, setStations] = useState<Station[]>([])
     const [favourites, setFavourites] = useState<Station[]>([]);
-    const [count, setCount] = useState<number>(20)
+    const [limit, setLimit] = useState<number>(20)
     const [search, setSearch] = useState<string>("")
 
     useEffect(() => {
         if (search){
-            axios.get(`/api/radioStations/${search}?count=${count}`).then((response) => {
+            axios.get(`/api/radioStations/${search}?count=${limit}`).then((response) => {
                 setStations(response.data)
             })
         } else {
-            axios.get(`/api/radioStations?count=${count}`).then((response) => {
+            axios.get(`/api/stations/getStations/${limit}`).then((response) => {
                 setStations(response.data)
             })
         }
         user && setFavourites(user.favouriteStations);
-    }, [user, count]);
+    }, [user, limit]);
 
     const onSearch = (event: { preventDefault: () => void; }) => {
-        axios.get(`/api/radioStations/${search}?count=${count}`).then((response) => {
+        axios.get(`/api/radioStations/${search}?count=${limit}`).then((response) => {
             setStations(response.data)
         })
         event.preventDefault();
@@ -46,7 +46,7 @@ export const StationsList: React.FC<StationsListProps> = ({
 
     const onResetSearch = () => {
         setSearch("")
-        axios.get(`/api/radioStations?count=${count}`).then((response) => {
+        axios.get(`/api/radioStations?count=${limit}`).then((response) => {
             setStations(response.data)
         })
     }
@@ -65,7 +65,7 @@ export const StationsList: React.FC<StationsListProps> = ({
     };
 
     const onShowMore = () => {
-        setCount(count + 20)
+        setLimit(limit + 20)
     }
 
     return (

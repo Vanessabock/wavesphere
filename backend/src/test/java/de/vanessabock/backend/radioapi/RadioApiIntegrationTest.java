@@ -138,7 +138,7 @@ public class RadioApiIntegrationTest {
 
 
         //WHEN
-        MvcResult mvcResult = mockMvc.perform(get("/api/radioStations?count=2"))
+        MvcResult mvcResult = mockMvc.perform(get("/api/radioStations?limit=2"))
 
                 //THEN
                 .andExpect(status().isOk())
@@ -255,7 +255,7 @@ public class RadioApiIntegrationTest {
 
 
         //WHEN
-        MvcResult mvcResult = mockMvc.perform(get("/api/radioStations/mango?count=2"))
+        MvcResult mvcResult = mockMvc.perform(get("/api/radioStations/mango?limit=2"))
 
                 //THEN
                 .andExpect(status().isOk())
