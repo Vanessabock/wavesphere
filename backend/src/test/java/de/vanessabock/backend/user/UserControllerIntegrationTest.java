@@ -1,6 +1,5 @@
 package de.vanessabock.backend.user;
 
-import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import de.vanessabock.backend.user.model.User;
 import de.vanessabock.backend.user.repository.UserRepo;
 import org.junit.jupiter.api.Test;
