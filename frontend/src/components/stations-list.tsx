@@ -34,8 +34,11 @@ export const StationsList: React.FC<StationsListProps> = ({
                 setStations(response.data)
             })
         }
+    }, [limit]);
+
+    useEffect(() => {
         user && setFavourites(user.favouriteStations);
-    }, [user, limit]);
+    }, [user]);
 
     const onSearch = (event: { preventDefault: () => void; }) => {
         axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
@@ -65,7 +68,7 @@ export const StationsList: React.FC<StationsListProps> = ({
     };
 
     const onShowMore = () => {
-        setLimit(limit + 20)
+        setLimit(limit => limit + 20)
     }
 
     return (
