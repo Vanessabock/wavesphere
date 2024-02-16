@@ -34,8 +34,11 @@ export const StationsList: React.FC<StationsListProps> = ({
                 setStations(response.data)
             })
         }
+    }, [limit]);
+
+    useEffect(() => {
         user && setFavourites(user.favouriteStations);
-    }, [user, limit]);
+    }, [user]);
 
     const onSearch = (event: { preventDefault: () => void; }) => {
         axios.get(`/api/radioStations/${search}?count=${limit}`).then((response) => {
