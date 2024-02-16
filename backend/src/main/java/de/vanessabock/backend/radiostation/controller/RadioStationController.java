@@ -21,8 +21,8 @@ public class RadioStationController {
         return radioStationService.getRadioStations(limit);
     }
 
-    @GetMapping("getStations/{limit}")
-    public List<RadioStation> getStationsBySearchNameWithLimit(@PathVariable int limit, @RequestParam String search){
-        return radioStationService.getRadioStationsBySearchName(limit, search);
+    @GetMapping("getStationsByName/{limit}")
+    public List<RadioStation> getStationsBySearchNameWithLimit(@PathVariable int limit, @RequestParam String name){
+        return radioStationService.getRadioStationsBySearchName(limit, name);
     }
 }
