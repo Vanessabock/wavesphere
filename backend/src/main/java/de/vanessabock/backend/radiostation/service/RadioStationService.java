@@ -1,7 +1,6 @@
 package de.vanessabock.backend.radiostation.service;
 
 import de.vanessabock.backend.radiostation.model.RadioStation;
-import de.vanessabock.backend.radiostation.model.RadioStationDto;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +27,13 @@ public class RadioStationService {
                 .toList();
     }
 
-    public RadioStation addRadioStation(RadioStationDto radioStationDto) {
-        return radioStationRepo.save(new RadioStation(UUID.randomUUID().toString(),
-                radioStationDto.getName(), radioStationDto.getUrl(),
-                radioStationDto.getHomepage(), radioStationDto.getFavicon()));
+    public RadioStation addRadioStation(RadioStation radioStation) {
+        if (radioStation.getStationuuid().isEmpty()){
+            return radioStationRepo.save(new RadioStation(UUID.randomUUID().toString(),
+                    radioStation.getName(), radioStation.getUrl(),
+                    radioStation.getHomepage(), radioStation.getFavicon()));
+        } else {
+            return radioStationRepo.save(radioStation);
+        }
     }
 }

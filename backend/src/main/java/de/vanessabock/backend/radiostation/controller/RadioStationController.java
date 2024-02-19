@@ -1,7 +1,6 @@
 package de.vanessabock.backend.radiostation.controller;
 
 import de.vanessabock.backend.radiostation.model.RadioStation;
-import de.vanessabock.backend.radiostation.model.RadioStationDto;
 import de.vanessabock.backend.radiostation.service.RadioStationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +27,7 @@ public class RadioStationController {
     }
 
     @PostMapping
-    public RadioStation addStation(@RequestBody RadioStationDto radioStationDto) {
-        return radioStationService.addRadioStation(radioStationDto);
+    public RadioStation addStation(@RequestBody RadioStation radioStation) {
+        return radioStationService.addRadioStation(radioStation);
     }
 }

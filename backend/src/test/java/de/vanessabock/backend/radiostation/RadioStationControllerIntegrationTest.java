@@ -1,7 +1,6 @@
 package de.vanessabock.backend.radiostation;
 
 import de.vanessabock.backend.radiostation.model.RadioStation;
-import de.vanessabock.backend.radiostation.model.RadioStationDto;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
