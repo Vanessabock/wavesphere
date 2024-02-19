@@ -62,7 +62,7 @@ export default function AddStationModal(props: Readonly<AddStationModalProps>) {
                     <ModalClose variant="plain"/>
                     <h2 className="mb-5 flex justify-center text-lg font-bold">Insert station information</h2>
                     <form className="flex flex-col gap-3" onSubmit={onStationSubmit}>
-                        <div className="flex justify-between">
+                        <div className="flex gap-3 justify-between">
                             Station name
                             <input
                                 value={name}
