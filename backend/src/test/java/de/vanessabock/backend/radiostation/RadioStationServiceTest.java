@@ -1,6 +1,7 @@
 package de.vanessabock.backend.radiostation;
 
 import de.vanessabock.backend.radiostation.model.RadioStation;
+import de.vanessabock.backend.radiostation.model.RadioStationDto;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import de.vanessabock.backend.radiostation.service.RadioStationService;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,22 @@ class RadioStationServiceTest {
         //THEN
         assertThat(actual).isEmpty();
         verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void addStationTest(){
+        //GIVEN
+        Mockito.when(radioStationRepo.save(Mockito.any())).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
+        RadioStationDto radioStationDto = new RadioStationDto("Radio", "www.radio.mp3", "www.radio.com", "icon");
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        RadioStation actual = radioStationService.addRadioStation(radioStationDto);
+
+        //THEN
+        assertThat(actual).isEqualTo(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
+        verify(radioStationRepo, times(1)).save(Mockito.any());
         verifyNoMoreInteractions(radioStationRepo);
     }
 }

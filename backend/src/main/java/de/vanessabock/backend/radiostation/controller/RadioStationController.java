@@ -28,7 +28,7 @@ public class RadioStationController {
     }
 
     @PostMapping
-    public RadioStation addBook(@RequestBody RadioStationDto radioStationDto) {
+    public RadioStation addStation(@RequestBody RadioStationDto radioStationDto) {
         return radioStationService.addRadioStation(radioStationDto);
     }
 }
