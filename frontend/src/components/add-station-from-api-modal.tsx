@@ -54,12 +54,11 @@ export default function AddStationFromApiModal(props: Readonly<AddStationModalPr
                     <h2 className="mb-5 flex justify-center text-lg font-bold">Search for station to add</h2>
                     <form className="flex flex-col gap-3" onSubmit={onStationSearch}>
                         <div className="flex gap-3 justify-between">
-                            Station name
-                            <input
-                                value={name}
-                                onChange={(event) => setName(event.target.value)}
-                                placeholder=""
-                            />
+                            Station name <input
+                            value={name}
+                            onChange={(event) => setName(event.target.value)}
+                            placeholder=""
+                        />
                         </div>
                         <button type="submit">Search</button>
                     </form>
@@ -67,7 +66,7 @@ export default function AddStationFromApiModal(props: Readonly<AddStationModalPr
                         {apiStations.map((s) =>
                             <div className="flex flex-row justify-between p-1" key={s.stationuuid}>
                                 {s.name}
-                                <button onClick={() => onStationSave(s)}> Save </button>
+                                <button onClick={() => onStationSave(s)}> Save</button>
                             </div>)}
                     </div>}
                 </Sheet>
