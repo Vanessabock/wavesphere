@@ -82,6 +82,7 @@ class RadioStationControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                          {
+                             "stationuuid": "",
                              "name": "Radio",
                              "url": "www.radio.mp3",
                              "homepage": "www.radio.com",
