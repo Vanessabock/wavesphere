@@ -17,4 +17,12 @@ public class RadioStationService {
     public List<RadioStation> getRadioStations(int limit){
         return radioStationRepo.findAll().stream().limit(limit).toList();
     }
+
+    public List<RadioStation> getRadioStationsBySearchName(int limit, String search) {
+        return radioStationRepo.findAll()
+                .stream()
+                .filter(station -> station.getName().toLowerCase().contains(search.toLowerCase()))
+                .limit(limit)
+                .toList();
+    }
 }

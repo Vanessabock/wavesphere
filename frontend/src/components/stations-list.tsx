@@ -26,7 +26,7 @@ export const StationsList: React.FC<StationsListProps> = ({
 
     useEffect(() => {
         if (search){
-            axios.get(`/api/radioStations/${search}?count=${limit}`).then((response) => {
+            axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
                 setStations(response.data)
             })
         } else {
@@ -41,7 +41,7 @@ export const StationsList: React.FC<StationsListProps> = ({
     }, [user]);
 
     const onSearch = (event: { preventDefault: () => void; }) => {
-        axios.get(`/api/radioStations/${search}?count=${limit}`).then((response) => {
+        axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
             setStations(response.data)
         })
         event.preventDefault();
@@ -49,7 +49,7 @@ export const StationsList: React.FC<StationsListProps> = ({
 
     const onResetSearch = () => {
         setSearch("")
-        axios.get(`/api/radioStations?count=${limit}`).then((response) => {
+        axios.get(`/api/stations/getStations/${limit}`).then((response) => {
             setStations(response.data)
         })
     }
