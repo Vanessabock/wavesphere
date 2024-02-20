@@ -240,7 +240,7 @@ public class RadioApiServiceTest {
 
     @DirtiesContext
     @Test
-    void getStationsBySearchNameTest_WhenResponseNull_ThenThrowException() throws NoSuchStationException {
+    void getStationsBySearchNameTest_WhenResponseNull_ThenThrowException() {
         //GIVEN
         mockWebServer.enqueue(new MockResponse().addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).setBody(""));
         String notExistingSearchName = "abc";
