@@ -25,8 +25,8 @@ export default function AddStationFromApiModal(props: Readonly<AddStationModalPr
         event.preventDefault();
 
         axios.get(`/api/radioStations/${name}?limit=10`).then((response) => {
-            setApiStations(response.data)
-        })
+            setApiStations(response.data)})
+            .catch(() => console.log("No Result for Radio Station Api Request with search name"));
     }
 
 

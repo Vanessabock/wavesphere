@@ -29,8 +29,8 @@ export const StationsList: React.FC<StationsListProps> = ({
     useEffect(() => {
         if (search) {
             axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
-                setStations(response.data)
-            })
+                setStations(response.data)})
+                .catch(() => console.log("No Result for radio station in database with search name"));
         } else {
             axios.get(`/api/stations/getStations/${limit}`).then((response) => {
                 setStations(response.data)
@@ -44,8 +44,8 @@ export const StationsList: React.FC<StationsListProps> = ({
 
     const onSearch = (event: { preventDefault: () => void; }) => {
         axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
-            setStations(response.data)
-        })
+            setStations(response.data)})
+            .catch(() => console.log("No Result for radio station in database with search name"));
         event.preventDefault();
     }
 
