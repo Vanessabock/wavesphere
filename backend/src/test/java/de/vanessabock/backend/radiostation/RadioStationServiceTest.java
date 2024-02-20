@@ -51,7 +51,7 @@ class RadioStationServiceTest {
     }
 
     @Test
-    void getRadioStationsBySearchNameTest_WhenSearchNameBayNotInDatabaseAndLimit1_ThenThrowException() throws NoSuchStationException {
+    void getRadioStationsBySearchNameTest_WhenSearchNameBayNotInDatabaseAndLimit1_ThenThrowException() {
         //GIVEN
         Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon")));
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
