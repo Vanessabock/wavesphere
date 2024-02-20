@@ -95,7 +95,8 @@ class RadioStationServiceTest {
 
         //THEN
         assertThat(actual).isEqualTo(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
-        verify(radioStationRepo, times(1)).save(Mockito.any());
+        verify(radioStationRepo, times(1)).save(Mockito.any(RadioStation.class));
+        verify(radioStationRepo, times(1)).existsRadioStationByStationuuid(Mockito.any(String.class));
         verifyNoMoreInteractions(radioStationRepo);
     }
 
