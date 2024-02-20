@@ -11,9 +11,9 @@ type AddStationModalProps = {
 };
 
 export default function AddStationFromApiModal(props: Readonly<AddStationModalProps>) {
-    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [name, setName] = useState<string>("");
-    const [apiStations, setApiStations] = React.useState<Station[]>([])
+    const [apiStations, setApiStations] = useState<Station[]>([])
 
     const onStationSave = (stationToSave: Station) => {
         props.saveStation(stationToSave)

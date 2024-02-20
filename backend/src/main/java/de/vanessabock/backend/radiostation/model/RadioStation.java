@@ -1,6 +1,7 @@
 package de.vanessabock.backend.radiostation.model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class RadioStation {
     String stationuuid;
@@ -15,6 +16,12 @@ public class RadioStation {
         this.url = url;
         this.homepage = homepage;
         this.favicon = favicon;
+    }
+
+    public RadioStation withNewUUID(){
+        return new RadioStation(UUID.randomUUID().toString(),
+                this.getName(), this.getUrl(),
+                this.getHomepage(), this.getFavicon());
     }
 
     public String getStationuuid() {

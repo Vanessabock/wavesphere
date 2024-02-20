@@ -6,7 +6,7 @@ import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @Service
 public class RadioStationService {
@@ -36,9 +36,7 @@ public class RadioStationService {
 
     public RadioStation addRadioStation(RadioStation radioStation) {
         if (radioStation.getStationuuid().isEmpty()){
-            return radioStationRepo.save(new RadioStation(UUID.randomUUID().toString(),
-                    radioStation.getName(), radioStation.getUrl(),
-                    radioStation.getHomepage(), radioStation.getFavicon()));
+            return radioStationRepo.save(radioStation.withNewUUID());
         } else {
             return radioStationRepo.save(radioStation);
         }

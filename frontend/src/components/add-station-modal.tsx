@@ -10,7 +10,7 @@ type AddStationModalProps = {
 };
 
 export default function AddStationModal(props: Readonly<AddStationModalProps>) {
-    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [name, setName] = useState<string>("");
     const [url, setUrl] = useState<string>("");
     const [homepage, setHomepage] = useState<string>("");

@@ -69,7 +69,7 @@ class RadioStationServiceTest {
     @Test
     void addStationTest_ifStationUuidIsEmpty_GenerateNewUuid(){
         //GIVEN
-        Mockito.when(radioStationRepo.save(Mockito.any())).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
+        when(radioStationRepo.save(Mockito.any(RadioStation.class))).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
         RadioStation radioStation = new RadioStation("", "Radio", "www.radio.mp3", "www.radio.com", "icon");
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
 
@@ -85,7 +85,7 @@ class RadioStationServiceTest {
     @Test
     void addStationTest_ifStationUuidIsNotEmpty_SaveStation(){
         //GIVEN
-        Mockito.when(radioStationRepo.save(Mockito.any())).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
+        Mockito.when(radioStationRepo.save(Mockito.any(RadioStation.class))).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
         RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon");
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
 
