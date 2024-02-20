@@ -1,5 +1,6 @@
 package de.vanessabock.backend.radiostation;
 
+import de.vanessabock.backend.exceptions.NoSuchStationException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import de.vanessabock.backend.radiostation.service.RadioStationService;
@@ -10,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -33,7 +36,7 @@ class RadioStationServiceTest {
     }
 
     @Test
-    void getRadioStationsBySearchNameTest_WhenSearchNameBayInDatabaseAndLimit1_ReturnListWith1Object(){
+    void getRadioStationsBySearchNameTest_WhenSearchNameBayInDatabaseAndLimit1_ReturnListWith1Object() throws NoSuchStationException {
         //GIVEN
         Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon")));
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
@@ -48,18 +51,19 @@ class RadioStationServiceTest {
     }
 
     @Test
-    void getRadioStationsBySearchNameTest_WhenSearchNameBayNotInDatabaseAndLimit1_ReturnEmptyList(){
+    void getRadioStationsBySearchNameTest_WhenSearchNameBayNotInDatabaseAndLimit1_ThenThrowException() throws NoSuchStationException {
         //GIVEN
         Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon")));
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+        String notExistingSearchName = "Bla";
 
-        //WHEN
-        List<RadioStation> actual = radioStationService.getRadioStationsBySearchName(1, "Bay");
+        //WHEN & THEN
+        Exception exception = assertThrows(NoSuchStationException.class, () -> radioStationService.getRadioStationsBySearchName(20, notExistingSearchName));
 
-        //THEN
-        assertThat(actual).isEmpty();
-        verify(radioStationRepo, times(1)).findAll();
-        verifyNoMoreInteractions(radioStationRepo);
+        String expectedMessage = "No stations found with name " + notExistingSearchName + ".";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
