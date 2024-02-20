@@ -1,5 +1,6 @@
 package de.vanessabock.backend.radiostation.controller;
 
+import de.vanessabock.backend.exceptions.NoSuchStationException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.service.RadioStationService;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class RadioStationController {
     }
 
     @GetMapping("getStationsByName/{limit}")
-    public List<RadioStation> getStationsBySearchNameWithLimit(@PathVariable int limit, @RequestParam String name){
+    public List<RadioStation> getStationsBySearchNameWithLimit(@PathVariable int limit, @RequestParam String name) throws NoSuchStationException {
         return radioStationService.getRadioStationsBySearchName(limit, name);
     }
 
