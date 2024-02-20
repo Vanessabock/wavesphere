@@ -45,7 +45,8 @@ export const StationsList: React.FC<StationsListProps> = ({
     const onSearch = (event: { preventDefault: () => void; }) => {
         axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
             setStations(response.data)})
-            .catch(() => console.log("No Result for radio station in database with search name"));
+            .catch(() => {
+                console.log("No Result for radio station in database with search name")});
         event.preventDefault();
     }
 
@@ -79,9 +80,8 @@ export const StationsList: React.FC<StationsListProps> = ({
             setFavourites([...favourites, response.data]);
             if (user) {
                 updateUser({...user, favouriteStations: [...favourites, response.data]});
-            }
-        });
-
+            }})
+            .catch(() => console.log("Add failed. Station already exists in database"));
     };
 
     return (
