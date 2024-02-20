@@ -1,5 +1,6 @@
 package de.vanessabock.backend.radioapi;
 
+import de.vanessabock.backend.exceptions.NoSuchStationException;
 import de.vanessabock.backend.radioapi.service.RadioApiService;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import okhttp3.mockwebserver.MockResponse;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class RadioApiServiceTest {
@@ -145,7 +146,7 @@ public class RadioApiServiceTest {
 
     @DirtiesContext
     @Test
-    void getStationsBySearchNameTest_WhenCountAndSearch_ThenReturnListOfCountStations() {
+    void getStationsBySearchNameTest_WhenCountAndSearch_ThenReturnListOfCountStations() throws NoSuchStationException {
         //GIVEN
         mockWebServer.enqueue(new MockResponse().addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).setBody("""
                 [
@@ -239,15 +240,17 @@ public class RadioApiServiceTest {
 
     @DirtiesContext
     @Test
-    void getStationsBySearchNameTest_WhenResponseNull_ThenReturnEmptyList() {
+    void getStationsBySearchNameTest_WhenResponseNull_ThenThrowException() throws NoSuchStationException {
         //GIVEN
         mockWebServer.enqueue(new MockResponse().addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).setBody(""));
+        String notExistingSearchName = "abc";
 
-        //WHEN
-        List<RadioStation> actual = radioApiService.getStationsBySearchName("mango","2");
+        //WHEN & THEN
+        Exception exception = assertThrows(NoSuchStationException.class, () -> radioApiService.getStationsBySearchName("20", notExistingSearchName));
 
-        //THEN
-        assertEquals(new ArrayList<>(),
-                actual);
+        String expectedMessage = "No stations found with name " + notExistingSearchName + ".";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }
