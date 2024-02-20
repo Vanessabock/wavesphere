@@ -13,4 +13,10 @@ public class GlobalExceptionHandler {
     public ErrorMessage globalNoSuchStationExceptionHandler(NoSuchStationException exception){
         return new ErrorMessage("Not found. " + exception.getMessage());
     }
+
+    @ExceptionHandler({StationAlreadyInDatabaseException.class})
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ErrorMessage globalStationAlreadyInDatabaseExceptionHandler(StationAlreadyInDatabaseException exception){
+        return new ErrorMessage("Not allowed. " + exception.getMessage());
+    }
 }
