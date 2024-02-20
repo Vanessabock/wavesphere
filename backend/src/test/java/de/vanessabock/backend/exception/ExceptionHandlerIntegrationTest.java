@@ -1,5 +1,7 @@
 package de.vanessabock.backend.exception;
 
+import de.vanessabock.backend.radiostation.model.RadioStation;
+import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,13 +15,11 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,6 +29,9 @@ class ExceptionHandlerIntegrationTest {
 
     @Autowired
     public MockMvc mockMvc;
+
+    @Autowired
+    private RadioStationRepo radioStationRepo;
 
     @BeforeAll
     public static void setup() throws IOException {
@@ -44,7 +47,7 @@ class ExceptionHandlerIntegrationTest {
 
     @DirtiesContext
     @Test
-    void globalExceptionHandlerTest_StationNotFoundException_OnApiRequest() throws Exception {
+    void globalExceptionHandlerTest_StationNotFoundException_ApiRequest() throws Exception {
         //Given
         String notExistingName = "Bla";
 
@@ -53,29 +56,45 @@ class ExceptionHandlerIntegrationTest {
                 .setBody(""));
 
         //WHEN
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/radioStations/{search}?limit=10", notExistingName))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/radioStations/{search}?limit=10", notExistingName))
 
                 //THEN
-                .andExpect(status().is(404))
-                .andReturn();
-
-        assertEquals(404, mvcResult.getResponse().getStatus());
+                .andExpect(status().is(404));
         }
 
     @DirtiesContext
     @Test
-    void globalExceptionHandlerTest_StationNotFoundException_OnDatabaseRequest() throws Exception {
+    void globalExceptionHandlerTest_StationNotFoundException_DatabaseRequest() throws Exception {
         //Given
         String notExistingName = "Bla";
 
         //WHEN
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/stations/getStationsByName/10?name={search}", notExistingName))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/stations/getStationsByName/10?name={search}", notExistingName))
 
                 //THEN
-                .andExpect(status().is(404))
-                .andReturn();
+                .andExpect(status().is(404));
+    }
 
-        assertEquals(404, mvcResult.getResponse().getStatus());
+    @Test
+    void globalExceptionHandlerTest_StationAlreadyInDatabaseException() throws Exception {
+        //GIVEN
+        RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon");
+        radioStationRepo.save(radioStation);
+        //WHEN
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/stations")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                         {
+                             "stationuuid": "1234",
+                             "name": "Radio",
+                             "url": "www.radio.mp3",
+                             "homepage": "www.radio.com",
+                             "favicon": "icon"
+                         }
+                         """)
+                )
+                //THEN
+                .andExpect(status().isMethodNotAllowed());
     }
 
 }
