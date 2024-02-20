@@ -100,7 +100,7 @@ class RadioStationServiceTest {
     }
 
     @Test
-    void addStationTest_ifStationUuidIsNotEmptyButStationAlreadyInDatabase_ThrowException() throws StationAlreadyInDatabaseException {
+    void addStationTest_ifStationUuidIsNotEmptyButStationAlreadyInDatabase_ThrowException() {
         //GIVEN
         when(radioStationRepo.existsRadioStationByStationuuid(Mockito.any(String.class))).thenReturn(true);
         RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon");
