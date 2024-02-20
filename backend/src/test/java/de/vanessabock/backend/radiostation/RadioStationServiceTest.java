@@ -61,4 +61,36 @@ class RadioStationServiceTest {
         verify(radioStationRepo, times(1)).findAll();
         verifyNoMoreInteractions(radioStationRepo);
     }
+
+    @Test
+    void addStationTest_ifStationUuidIsEmpty_GenerateNewUuid(){
+        //GIVEN
+        when(radioStationRepo.save(Mockito.any(RadioStation.class))).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
+        RadioStation radioStation = new RadioStation("", "Radio", "www.radio.mp3", "www.radio.com", "icon");
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        RadioStation actual = radioStationService.addRadioStation(radioStation);
+
+        //THEN
+        assertThat(actual).isEqualTo(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
+        verify(radioStationRepo, times(1)).save(Mockito.any());
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void addStationTest_ifStationUuidIsNotEmpty_SaveStation(){
+        //GIVEN
+        Mockito.when(radioStationRepo.save(Mockito.any(RadioStation.class))).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
+        RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon");
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        RadioStation actual = radioStationService.addRadioStation(radioStation);
+
+        //THEN
+        assertThat(actual).isEqualTo(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
+        verify(radioStationRepo, times(1)).save(Mockito.any());
+        verifyNoMoreInteractions(radioStationRepo);
+    }
 }

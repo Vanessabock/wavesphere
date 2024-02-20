@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class RadioStationService {
     private final RadioStationRepo radioStationRepo;
@@ -14,7 +15,7 @@ public class RadioStationService {
         this.radioStationRepo = radioStationRepo;
     }
 
-    public List<RadioStation> getRadioStations(int limit){
+    public List<RadioStation> getRadioStations(int limit) {
         return radioStationRepo.findAll().stream().limit(limit).toList();
     }
 
@@ -24,5 +25,13 @@ public class RadioStationService {
                 .filter(station -> station.getName().toLowerCase().contains(search.toLowerCase()))
                 .limit(limit)
                 .toList();
+    }
+
+    public RadioStation addRadioStation(RadioStation radioStation) {
+        if (radioStation.getStationuuid().isEmpty()){
+            return radioStationRepo.save(radioStation.withNewUUID());
+        } else {
+            return radioStationRepo.save(radioStation);
+        }
     }
 }

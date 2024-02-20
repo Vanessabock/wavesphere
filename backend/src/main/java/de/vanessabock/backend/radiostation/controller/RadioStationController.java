@@ -25,4 +25,9 @@ public class RadioStationController {
     public List<RadioStation> getStationsBySearchNameWithLimit(@PathVariable int limit, @RequestParam String name){
         return radioStationService.getRadioStationsBySearchName(limit, name);
     }
+
+    @PostMapping
+    public RadioStation addStation(@RequestBody RadioStation radioStation) {
+        return radioStationService.addRadioStation(radioStation);
+    }
 }
