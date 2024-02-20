@@ -1,6 +1,7 @@
 package de.vanessabock.backend.radiostation.service;
 
 import de.vanessabock.backend.exceptions.NoSuchStationException;
+import de.vanessabock.backend.exceptions.StationAlreadyInDatabaseException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import org.springframework.stereotype.Service;
@@ -34,10 +35,13 @@ public class RadioStationService {
         return result;
     }
 
-    public RadioStation addRadioStation(RadioStation radioStation) {
+    public RadioStation addRadioStation(RadioStation radioStation) throws StationAlreadyInDatabaseException {
         if (radioStation.getStationuuid().isEmpty()){
             return radioStationRepo.save(radioStation.withNewUUID());
         } else {
+            if (radioStationRepo.existsRadioStationByStationuuid(radioStation.getStationuuid())){
+                throw new StationAlreadyInDatabaseException("Station " + radioStation.getName() + " already exists in database.");
+            }
             return radioStationRepo.save(radioStation);
         }
     }
