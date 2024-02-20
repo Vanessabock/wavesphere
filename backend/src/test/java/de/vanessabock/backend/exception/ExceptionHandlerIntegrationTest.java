@@ -44,7 +44,7 @@ class ExceptionHandlerIntegrationTest {
 
     @DirtiesContext
     @Test
-    void globalExceptionHandlerTest_StationNotFoundException() throws Exception {
+    void globalExceptionHandlerTest_StationNotFoundException_OnApiRequest() throws Exception {
         //Given
         String notExistingName = "Bla";
 
@@ -61,5 +61,21 @@ class ExceptionHandlerIntegrationTest {
 
         assertEquals(404, mvcResult.getResponse().getStatus());
         }
+
+    @DirtiesContext
+    @Test
+    void globalExceptionHandlerTest_StationNotFoundException_OnDatabaseRequest() throws Exception {
+        //Given
+        String notExistingName = "Bla";
+
+        //WHEN
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/stations/getStationsByName/10?name={search}", notExistingName))
+
+                //THEN
+                .andExpect(status().is(404))
+                .andReturn();
+
+        assertEquals(404, mvcResult.getResponse().getStatus());
+    }
 
 }
