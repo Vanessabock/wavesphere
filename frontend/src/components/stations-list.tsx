@@ -25,6 +25,7 @@ export const StationsList: React.FC<StationsListProps> = ({
     const [favourites, setFavourites] = useState<Station[]>([]);
     const [limit, setLimit] = useState<number>(20)
     const [search, setSearch] = useState<string>("")
+    const [countryFilter, setCountryFilter] = useState<String[]>([]);
 
     useEffect(() => {
         if (search) {
@@ -37,6 +38,9 @@ export const StationsList: React.FC<StationsListProps> = ({
                 setStations(response.data)
             })
         }
+        axios.get("/api/stations/getAllCountries").then((response => {
+            setCountryFilter(response.data)
+        }))
     }, [limit]);
 
     useEffect(() => {
