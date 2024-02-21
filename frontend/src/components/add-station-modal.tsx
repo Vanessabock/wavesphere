@@ -15,6 +15,8 @@ export default function AddStationModal(props: Readonly<AddStationModalProps>) {
     const [url, setUrl] = useState<string>("");
     const [homepage, setHomepage] = useState<string>("");
     const [favicon, setFavicon] = useState<string>("");
+    const [country, setCountry] = useState<string>("");
+    const [tags, setTags] = useState<string>("");
 
     const onStationSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -24,7 +26,9 @@ export default function AddStationModal(props: Readonly<AddStationModalProps>) {
             name: name,
             url_resolved: url,
             homepage: homepage,
-            favicon: favicon
+            favicon: favicon,
+            country: country,
+            tags: tags
         };
 
         props.saveStation(stationToSave);
@@ -32,6 +36,8 @@ export default function AddStationModal(props: Readonly<AddStationModalProps>) {
         setUrl("");
         setHomepage("");
         setFavicon("");
+        setCountry("");
+        setTags("")
 
         setIsModalOpen(false);
     };
@@ -46,6 +52,8 @@ export default function AddStationModal(props: Readonly<AddStationModalProps>) {
                     setUrl("");
                     setHomepage("");
                     setFavicon("");
+                    setCountry("");
+                    setTags("");
                     setIsModalOpen(true);
                 }}
             >
@@ -79,6 +87,14 @@ export default function AddStationModal(props: Readonly<AddStationModalProps>) {
                         </div>
                         <div className="flex justify-between">
                             Icon <input value={favicon} onChange={(event) => setFavicon(event.target.value)}
+                                        placeholder=""/>
+                        </div>
+                        <div className="flex justify-between">
+                            Country <input value={country} onChange={(event) => setCountry(event.target.value)}
+                                        placeholder=""/>
+                        </div>
+                        <div className="flex justify-between">
+                            Tags <input value={tags} onChange={(event) => setTags(event.target.value)}
                                         placeholder=""/>
                         </div>
                         <button type="submit">Save</button>
