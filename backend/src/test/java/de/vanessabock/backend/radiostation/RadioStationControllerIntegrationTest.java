@@ -103,6 +103,33 @@ class RadioStationControllerIntegrationTest {
 
     @DirtiesContext
     @Test
+    void getStationsFilteredByCountryTest_WhenCountrySelected_ThenReturnListWithStationsInCountry() throws Exception {
+        //GIVEN
+        RadioStation germanRadioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany");
+        RadioStation spanishRadioStation = new RadioStation("5678", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Spain");
+        radioStationRepo.save(germanRadioStation);
+        radioStationRepo.save(spanishRadioStation);
+
+        //WHEN
+        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStationsByCountry/Germany"))
+
+                //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        [{
+                             "stationuuid": "1234",
+                             "name": "Radio",
+                             "url_resolved": "www.radio.mp3",
+                             "homepage": "www.radio.com",
+                             "favicon": "icon",
+                             "tags": "music",
+                             "country": "Germany"
+                         }]
+                        """));
+    }
+
+    @DirtiesContext
+    @Test
     void addStationTest() throws Exception {
         //GIVEN
         //WHEN
