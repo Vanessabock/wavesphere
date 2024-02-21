@@ -85,11 +85,14 @@ class RadioStationServiceTest {
     }
 
     @Test
-    void getAllCountriesForFilterTest_When1CountryIsNull_ThenReturnListWith1Country() {
+    void getAllCountriesForFilterTest_WhenCountryIsNullOrEmptyOrAlreadyListed_ThenReturnListWith1Country() {
         //GIVEN
         Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(
                 new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
-                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", null)));
+                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", null),
+                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", ""),
+                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany")));
+
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
 
         //WHEN
@@ -101,7 +104,7 @@ class RadioStationServiceTest {
         verifyNoMoreInteractions(radioStationRepo);
     }
 
-    @Test
+    /*@Test
     void getAllCountriesForFilterTest_When1CountryIsEmpty_ThenReturnListWith1Country() {
         //GIVEN
         Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(
@@ -117,6 +120,23 @@ class RadioStationServiceTest {
         verify(radioStationRepo, times(1)).findAll();
         verifyNoMoreInteractions(radioStationRepo);
     }
+
+    @Test
+    void getAllCountriesForFilterTest_When2EqualCountries_ThenReturnListWith1Country() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(
+                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
+                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<String> actual = radioStationService.getAllCountriesForFilter();
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder("Germany");
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }*/
 
     @Test
     void addStationTest_ifStationUuidIsEmpty_GenerateNewUuid() throws StationAlreadyInDatabaseException {
