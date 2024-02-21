@@ -19,7 +19,7 @@ public class RadioStationController {
     }
 
     @GetMapping("getStations/{limit}")
-    public List<RadioStation> getStationsWithLimit(@PathVariable int limit){
+    public List<RadioStation> getStationsWithLimit(@PathVariable int limit) {
         return radioStationService.getRadioStations(limit);
     }
 
@@ -29,12 +29,12 @@ public class RadioStationController {
     }
 
     @GetMapping("getAllCountries")
-    public List<String> getAllCountriesForFilter(){
+    public List<String> getAllCountriesForFilter() {
         return radioStationService.getAllCountriesForFilter();
     }
 
     @GetMapping("getStationsByCountry/{country}")
-    public List<RadioStation> getStationsFilteredByCountry(@PathVariable String country){
+    public List<RadioStation> getStationsFilteredByCountry(@PathVariable String country) {
         return radioStationService.getStationsFilteredByCountry(country);
     }
 
