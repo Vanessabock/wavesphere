@@ -19,7 +19,9 @@ function App() {
         name: "",
         url_resolved: "",
         homepage: "",
-        favicon: ""
+        favicon: "",
+        tags: "",
+        country: ""
     })
     const [stationOnNowPlayingScreen, setStationOnNowPlayingScreen] = useState<Station>(nowPlayingStation)
 
@@ -52,6 +54,8 @@ function App() {
                 url_resolved: "",
                 homepage: "",
                 favicon: "",
+                tags: "",
+                country: ""
             })
         } else {
             setNowPlayingStation(station)
