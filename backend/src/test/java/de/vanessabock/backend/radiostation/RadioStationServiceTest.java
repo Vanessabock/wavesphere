@@ -68,11 +68,11 @@ class RadioStationServiceTest {
     }
 
     @Test
-    void getAllCountriesForFilterTest_WhenStationsWith2DiffCountriesInDB_ThenReturnListWith2Countries() {
+    void getAllCountriesForFilterTest_WhenStationsWith2DiffCountriesInDB_ThenReturnABCSortedListWith2Countries() {
         //GIVEN
         Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(
-                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
-                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", "Spain")));
+                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", "Spain"),
+                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany")));
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
 
         //WHEN
