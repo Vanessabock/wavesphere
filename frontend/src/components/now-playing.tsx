@@ -1,9 +1,9 @@
 import {Station} from "../types/Station.ts";
 import React, {useEffect, useRef, useState} from "react";
-import {PauseIcon} from "./pause-icon.tsx";
-import {PlayIcon} from "./play-icon.tsx";
-import {VolumeIcon} from "./volume-icon.tsx";
-import {MuteIcon} from "./mute-icon.tsx";
+import {PauseIcon} from "../icons/pause-icon.tsx";
+import {PlayIcon} from "../icons/play-icon.tsx";
+import {VolumeIcon} from "../icons/volume-icon.tsx";
+import {MuteIcon} from "../icons/mute-icon.tsx";
 import Slider from '@mui/joy/Slider';
 
 type NowPlayingProps = {
@@ -53,7 +53,7 @@ export const NowPlaying: React.FC<NowPlayingProps> = ({
                             {nowPlayingStation.stationuuid ? <PauseIcon size={"50px"}/> : <PlayIcon size={"50px"}/>}
                         </button>
                     </div>
-                    {nowPlayingStation.stationuuid && (<audio className="hidden" ref={audioPlayer} controls autoPlay src={nowPlayingStation.url}></audio>)}
+                    {nowPlayingStation.stationuuid && (<audio className="hidden" ref={audioPlayer} controls autoPlay src={nowPlayingStation.url_resolved}></audio>)}
                 </div>)}
         </>
     )

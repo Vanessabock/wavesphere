@@ -1,10 +1,10 @@
 import {Station} from "../types/Station.ts";
 import React from "react";
 import placeholderRadio from "./../assets/radio-placeholder.png"
-import {PauseIcon} from "./pause-icon.tsx";
-import {PlayIcon} from "./play-icon.tsx";
-import {WebsiteLinkIcon} from "./website-link-icon.tsx";
-import {FavouriteIcon} from "./favourite-icon.tsx";
+import {PauseIcon} from "../icons/pause-icon.tsx";
+import {PlayIcon} from "../icons/play-icon.tsx";
+import {WebsiteLinkIcon} from "../icons/website-link-icon.tsx";
+import {FavouriteIcon} from "../icons/favourite-icon.tsx";
 
 type StationCardProps = {
     station: Station

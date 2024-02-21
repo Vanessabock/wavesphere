@@ -22,7 +22,7 @@ export default function AddStationModal(props: Readonly<AddStationModalProps>) {
         const stationToSave: Station = {
             stationuuid: "",
             name: name,
-            url: url,
+            url_resolved: url,
             homepage: homepage,
             favicon: favicon
         };
