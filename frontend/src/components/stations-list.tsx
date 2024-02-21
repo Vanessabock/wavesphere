@@ -26,31 +26,44 @@ export const StationsList: React.FC<StationsListProps> = ({
     const [limit, setLimit] = useState<number>(20)
     const [search, setSearch] = useState<string>("")
     const [countryFilterElems, setCountryFilterElems] = useState<string[]>([]);
+    const [country, setCountry] = useState<String>("")
 
     useEffect(() => {
         if (search) {
+            // get limit results of search when limit changed
             axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
                 setStations(response.data)
             })
                 .catch(() => console.log("No Result for radio station in database with search name"));
+        } else if (country) {
+            // get limit results of country when limit changed
+            axios.get(`/api/stations/getStationsByCountry/${limit}?country=${country}`).then(response =>
+                setStations(response.data));
         } else {
+            // get limit results of all stations when limit changed
             axios.get(`/api/stations/getStations/${limit}`).then((response) => {
                 setStations(response.data)
             })
         }
+        // get all possible countries from stations to setup filter
         axios.get("/api/stations/getAllCountries").then((response => {
             setCountryFilterElems(response.data)
         }))
     }, [limit]);
 
     useEffect(() => {
+        // set favourites when user changed
         user && setFavourites(user.favouriteStations);
     }, [user]);
 
     const onSearch = (event: { preventDefault: () => void; }) => {
+        // reset country filter when use search field
+        setCountry("");
+        // search for station name
         axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
             setStations(response.data)
         })
+            // catch if no station with name in database
             .catch(() => {
                 console.log("No Result for radio station in database with search name")
             });
@@ -58,6 +71,7 @@ export const StationsList: React.FC<StationsListProps> = ({
     }
 
     const onResetSearch = () => {
+        // reset search when "x" is clicked
         setSearch("")
         axios.get(`/api/stations/getStations/${limit}`).then((response) => {
             setStations(response.data)
@@ -67,36 +81,50 @@ export const StationsList: React.FC<StationsListProps> = ({
     const toggleFavourite = (station: Station): void => {
         let updatedFavourites: Station[];
         if (favourites.some(fav => fav.stationuuid === station.stationuuid)) {
+            // un-favourite if station is already selected as favourite
             updatedFavourites = favourites.filter((s) => s.stationuuid !== station.stationuuid);
         } else {
+            // add station to favourites
             updatedFavourites = [...favourites, station];
         }
         if (user) {
+            // update use when user logged in
             updateUser({...user, favouriteStations: updatedFavourites});
         }
+        // set frontend favourites
         setFavourites(updatedFavourites);
     };
 
     const onShowMore = () => {
+        // set new limit of results
         setLimit(limit => limit + 20)
     }
 
     const addStation = (stationToSave: Station) => {
+        // add station manual or from api -> differentiation in backend
         axios.post("/api/stations", stationToSave).then((response) => {
-            setStations([...stations, response.data]);
+            // set added station as favourite to make it easier to find
             setFavourites([...favourites, response.data]);
             if (user) {
+                // update user with new favourite
                 updateUser({...user, favouriteStations: [...favourites, response.data]});
             }
         })
+            // catch if station already in database
             .catch(() => console.log("Add failed. Station already exists in database"));
     };
     const onCountryFilterChanged = (event: { target: { value: any; }; }) => {
-        if (event.target.value === "Show all"){
+        // reset search field when use country filter
+        setSearch("")
+        // set country use state
+        setCountry(event.target.value)
+        if (event.target.value === "Show all") {
+            // get all stations when "Show all" selected
             axios.get(`/api/stations/getStations/${limit}`).then((response) => {
                 setStations(response.data)
             })
         }
+        // make filter request with selected country
         axios.get(`/api/stations/getStationsByCountry/${limit}?country=${event.target.value}`).then(response =>
             setStations(response.data));
     }
