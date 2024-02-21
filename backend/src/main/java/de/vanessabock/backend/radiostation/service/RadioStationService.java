@@ -6,6 +6,7 @@ import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,5 +45,16 @@ public class RadioStationService {
             }
             return radioStationRepo.save(radioStation);
         }
+    }
+
+    public List<String> getAllCountriesForFilter() {
+        List<String> countryFilter = new ArrayList<>();
+        radioStationRepo.findAll()
+                .forEach(station -> {
+                    if (!countryFilter.contains(station.getCountry()) && station.getCountry() != null && !station.getCountry().isEmpty()){
+                        countryFilter.add(station.getCountry());
+                    }
+                });
+        return countryFilter;
     }
 }
