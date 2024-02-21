@@ -39,7 +39,7 @@ class RadioStationControllerIntegrationTest {
                         [{
                              "stationuuid": "1234",
                              "name": "Radio",
-                             "url": "www.radio.mp3",
+                             "url_resolved": "www.radio.mp3",
                              "homepage": "www.radio.com",
                              "favicon": "icon"
                          }]
@@ -64,7 +64,7 @@ class RadioStationControllerIntegrationTest {
                         [{
                              "stationuuid": "1234",
                              "name": "Bayern 3",
-                             "url": "www.radio.mp3",
+                             "url_resolved": "www.radio.mp3",
                              "homepage": "www.radio.com",
                              "favicon": "icon"
                          }]
@@ -84,7 +84,7 @@ class RadioStationControllerIntegrationTest {
                          {
                              "stationuuid": "",
                              "name": "Radio",
-                             "url": "www.radio.mp3",
+                             "url_resolved": "www.radio.mp3",
                              "homepage": "www.radio.com",
                              "favicon": "icon"
                          }
@@ -96,7 +96,7 @@ class RadioStationControllerIntegrationTest {
 
                           {
                              "name": "Radio",
-                             "url": "www.radio.mp3",
+                             "url_resolved": "www.radio.mp3",
                              "homepage": "www.radio.com",
                              "favicon": "icon"
                           }
