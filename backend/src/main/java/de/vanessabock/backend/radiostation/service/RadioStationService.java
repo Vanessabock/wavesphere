@@ -50,8 +50,8 @@ public class RadioStationService {
         return countryFilter;
     }
 
-    public List<RadioStation> getStationsFilteredByCountry(String country) {
-        return radioStationRepo.getRadioStationByCountry(country);
+    public List<RadioStation> getStationsFilteredByCountry(int limit, String country) {
+        return radioStationRepo.getRadioStationByCountry(country).stream().limit(limit).toList();
     }
 
     public RadioStation addRadioStation(RadioStation radioStation) throws StationAlreadyInDatabaseException {

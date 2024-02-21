@@ -111,7 +111,7 @@ class RadioStationControllerIntegrationTest {
         radioStationRepo.save(spanishRadioStation);
 
         //WHEN
-        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStationsByCountry/Germany"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStationsByCountry/1?country=Germany"))
 
                 //THEN
                 .andExpect(status().isOk())

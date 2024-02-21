@@ -33,9 +33,9 @@ public class RadioStationController {
         return radioStationService.getAllCountriesForFilter();
     }
 
-    @GetMapping("getStationsByCountry/{country}")
-    public List<RadioStation> getStationsFilteredByCountry(@PathVariable String country) {
-        return radioStationService.getStationsFilteredByCountry(country);
+    @GetMapping("getStationsByCountry/{limit}")
+    public List<RadioStation> getStationsFilteredByCountry(@PathVariable int limit, @RequestParam String country) {
+        return radioStationService.getStationsFilteredByCountry(limit, country);
     }
 
     @PostMapping

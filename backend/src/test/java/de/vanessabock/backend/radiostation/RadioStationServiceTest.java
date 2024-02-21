@@ -114,7 +114,7 @@ class RadioStationServiceTest {
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
 
         //WHEN
-        List<RadioStation> actual = radioStationService.getStationsFilteredByCountry("Germany");
+        List<RadioStation> actual = radioStationService.getStationsFilteredByCountry(2,"Germany");
 
         //THEN
         assertThat(actual).containsExactlyInAnyOrder(
