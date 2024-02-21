@@ -28,6 +28,11 @@ public class RadioStationController {
         return radioStationService.getRadioStationsBySearchName(limit, name);
     }
 
+    @GetMapping("getAllCountries")
+    public List<String> getAllCountriesForFilter(){
+        return radioStationService.getAllCountriesForFilter();
+    }
+
     @PostMapping
     public RadioStation addStation(@RequestBody RadioStation radioStation) throws StationAlreadyInDatabaseException {
         return radioStationService.addRadioStation(radioStation);
