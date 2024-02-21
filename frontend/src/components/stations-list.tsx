@@ -26,7 +26,7 @@ export const StationsList: React.FC<StationsListProps> = ({
     const [limit, setLimit] = useState<number>(20)
     const [search, setSearch] = useState<string>("")
     const [countryFilterElems, setCountryFilterElems] = useState<string[]>([]);
-    const [country, setCountry] = useState<String>("")
+    const [country, setCountry] = useState<string>("")
 
     useEffect(() => {
         if (search) {
@@ -144,8 +144,9 @@ export const StationsList: React.FC<StationsListProps> = ({
             </div>}
             {!showFavourites && <div className="flex flex-row w-2/3 pr-14 gap-3 justify-end items-center">
                 Select a country to filter
-                <select className="bg-[#f8f1e6] text-[#17233c] w-1/2 h-6 rounded" onChange={onCountryFilterChanged}>
-                    {countryFilterElems.map(country => <option key={country} value={country}>{country}</option>)}
+                <select className="bg-[#f8f1e6] text-[#17233c] w-1/2 h-6 rounded"
+                        onChange={onCountryFilterChanged}>{countryFilterElems.map(country => <option key={country}
+                                                                                                     value={country}>{country}</option>)}
                 </select>
             </div>}
             {!showFavourites && (<div className="flex flex-col justify-center pb-10 w-2/3">
