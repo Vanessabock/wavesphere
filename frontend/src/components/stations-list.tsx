@@ -108,7 +108,7 @@ export const StationsList: React.FC<StationsListProps> = ({
             </div>}
             {!showFavourites && <div className="flex flex-row w-2/3 pr-14 p-3 gap-3 justify-end items-center">
                 <Select placeholder="Choose a country…">
-                    {countryFilter.map(country => <Option value={country}>{country}</Option>)}
+                    {countryFilter.map(country => <Option key={country} value={country}>{country}</Option>)}
                 </Select>
             </div>}
             {!showFavourites && (<div className="flex flex-col justify-center pb-10 w-2/3">
