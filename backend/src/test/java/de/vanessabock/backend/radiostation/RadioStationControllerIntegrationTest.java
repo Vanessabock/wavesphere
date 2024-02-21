@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,6 +25,7 @@ class RadioStationControllerIntegrationTest {
     @Autowired
     private RadioStationRepo radioStationRepo;
 
+    @DirtiesContext
     @Test
     void getStationsByLimitTest_WhenLimit1_ThenReturnListWith1Object() throws Exception {
         //GIVEN
@@ -31,7 +33,7 @@ class RadioStationControllerIntegrationTest {
         radioStationRepo.save(radioStation);
 
         //WHEN
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStations/1"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStations/1"))
 
                 //THEN
                 .andExpect(status().isOk())
@@ -45,12 +47,10 @@ class RadioStationControllerIntegrationTest {
                              "tags": "music",
                              "country": "country"
                          }]
-                        """))
-                .andReturn();
-
-        assertEquals(200, mvcResult.getResponse().getStatus());
+                        """));
     }
 
+    @DirtiesContext
     @Test
     void getStationsBySearchNameWithLimitTest_WhenSearchNameBayAndLimit1_ThenReturnListWith1Object() throws Exception {
         //GIVEN
@@ -78,6 +78,29 @@ class RadioStationControllerIntegrationTest {
         assertEquals(200, mvcResult.getResponse().getStatus());
     }
 
+    @DirtiesContext
+    @Test
+    void getAllCountriesForFilterTest_WhenStationsWith2DiffCountriesInDB_ThenReturnListWith2Countries() throws Exception {
+        //GIVEN
+        RadioStation germanRadioStation = new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany");
+        RadioStation spanishRadioStation = new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", "Spain");
+        radioStationRepo.save(germanRadioStation);
+        radioStationRepo.save(spanishRadioStation);
+
+        //WHEN
+        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getAllCountries"))
+
+                //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        [
+                            "Germany",
+                            "Spain"
+                        ]
+                        """));
+    }
+
+    @DirtiesContext
     @Test
     void addStationTest() throws Exception {
         //GIVEN

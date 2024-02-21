@@ -68,6 +68,57 @@ class RadioStationServiceTest {
     }
 
     @Test
+    void getAllCountriesForFilterTest_WhenStationsWith2DiffCountriesInDB_ThenReturnListWith2Countries() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(
+                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
+                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", "Spain")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<String> actual = radioStationService.getAllCountriesForFilter();
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder("Germany", "Spain");
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getAllCountriesForFilterTest_When1CountryIsNull_ThenReturnListWith1Country() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(
+                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
+                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", null)));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<String> actual = radioStationService.getAllCountriesForFilter();
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder("Germany");
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getAllCountriesForFilterTest_When1CountryIsEmpty_ThenReturnListWith1Country() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(
+                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
+                new RadioStation("1234", "RadioEs", "www.radio.mp3", "www.radio.com", "icon", "music", "")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<String> actual = radioStationService.getAllCountriesForFilter();
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder("Germany");
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
     void addStationTest_ifStationUuidIsEmpty_GenerateNewUuid() throws StationAlreadyInDatabaseException {
         //GIVEN
         when(radioStationRepo.save(Mockito.any(RadioStation.class))).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country"));
