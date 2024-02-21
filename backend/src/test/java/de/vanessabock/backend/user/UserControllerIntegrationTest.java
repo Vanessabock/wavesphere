@@ -71,7 +71,9 @@ class UserControllerIntegrationTest {
                                 "name": "Dance Wave!",
                                 "url_resolved": "https://dancewave.online/dance.mp3",
                                 "homepage": "https://dancewave.online/",
-                                "favicon": "https://dancewave.online/dw_logo.png"
+                                "favicon": "https://dancewave.online/dw_logo.png",
+                                "tags": "music",
+                                "country": "country"
                                 }]
                         }
                                         """))
@@ -87,7 +89,9 @@ class UserControllerIntegrationTest {
                                 "name": "Dance Wave!",
                                 "url_resolved": "https://dancewave.online/dance.mp3",
                                 "homepage": "https://dancewave.online/",
-                                "favicon": "https://dancewave.online/dw_logo.png"
+                                "favicon": "https://dancewave.online/dw_logo.png",
+                                "tags": "music",
+                                "country": "country"
                                 }]
                         }
                         """))
