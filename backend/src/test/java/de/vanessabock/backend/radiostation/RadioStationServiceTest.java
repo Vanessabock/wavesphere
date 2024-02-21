@@ -6,6 +6,7 @@ import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import de.vanessabock.backend.radiostation.service.RadioStationService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -101,6 +102,26 @@ class RadioStationServiceTest {
         //THEN
         assertThat(actual).containsExactlyInAnyOrder("Show all", "Germany");
         verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getStationsFilteredByCountryTest_WhenCountry_ThenReturnStationsInCountry(){
+        //GIVEN
+        Mockito.when(radioStationRepo.getRadioStationByCountry(Mockito.any(String.class))).thenReturn(List.of(
+                new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
+                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany")));
+
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<RadioStation> actual = radioStationService.getStationsFilteredByCountry("Germany");
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder(
+                new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
+                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"));
+        verify(radioStationRepo, times(1)).getRadioStationByCountry(Mockito.any(String.class));
         verifyNoMoreInteractions(radioStationRepo);
     }
 
