@@ -1,7 +1,7 @@
 package de.vanessabock.backend.radiostation.controller;
 
-import de.vanessabock.backend.exceptions.NoSuchStationException;
-import de.vanessabock.backend.exceptions.StationAlreadyInDatabaseException;
+import de.vanessabock.backend.exception.NoSuchStationException;
+import de.vanessabock.backend.exception.StationAlreadyInDatabaseException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.service.RadioStationService;
 import org.springframework.web.bind.annotation.*;

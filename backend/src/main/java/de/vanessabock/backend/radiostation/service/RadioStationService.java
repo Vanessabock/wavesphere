@@ -1,7 +1,7 @@
 package de.vanessabock.backend.radiostation.service;
 
-import de.vanessabock.backend.exceptions.NoSuchStationException;
-import de.vanessabock.backend.exceptions.StationAlreadyInDatabaseException;
+import de.vanessabock.backend.exception.NoSuchStationException;
+import de.vanessabock.backend.exception.StationAlreadyInDatabaseException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import org.springframework.stereotype.Service;

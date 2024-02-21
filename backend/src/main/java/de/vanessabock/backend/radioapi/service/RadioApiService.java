@@ -1,6 +1,6 @@
 package de.vanessabock.backend.radioapi.service;
 
-import de.vanessabock.backend.exceptions.NoSuchStationException;
+import de.vanessabock.backend.exception.NoSuchStationException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

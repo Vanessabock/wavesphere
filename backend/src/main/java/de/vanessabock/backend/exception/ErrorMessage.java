@@ -1,4 +1,4 @@
-package de.vanessabock.backend.exceptions;
+package de.vanessabock.backend.exception;
 
 import java.time.Instant;
 

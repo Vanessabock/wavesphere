@@ -1,7 +1,7 @@
 package de.vanessabock.backend.radiostation;
 
-import de.vanessabock.backend.exceptions.NoSuchStationException;
-import de.vanessabock.backend.exceptions.StationAlreadyInDatabaseException;
+import de.vanessabock.backend.exception.NoSuchStationException;
+import de.vanessabock.backend.exception.StationAlreadyInDatabaseException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import de.vanessabock.backend.radiostation.service.RadioStationService;

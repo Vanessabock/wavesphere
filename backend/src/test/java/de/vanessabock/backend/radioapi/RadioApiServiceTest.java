@@ -1,6 +1,6 @@
 package de.vanessabock.backend.radioapi;
 
-import de.vanessabock.backend.exceptions.NoSuchStationException;
+import de.vanessabock.backend.exception.NoSuchStationException;
 import de.vanessabock.backend.radioapi.service.RadioApiService;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import okhttp3.mockwebserver.MockResponse;
