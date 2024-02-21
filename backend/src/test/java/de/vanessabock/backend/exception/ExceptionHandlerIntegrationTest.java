@@ -78,7 +78,7 @@ class ExceptionHandlerIntegrationTest {
     @Test
     void globalExceptionHandlerTest_StationAlreadyInDatabaseException() throws Exception {
         //GIVEN
-        RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon");
+        RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country");
         radioStationRepo.save(radioStation);
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.post("/api/stations")
@@ -89,7 +89,9 @@ class ExceptionHandlerIntegrationTest {
                              "name": "Radio",
                              "url": "www.radio.mp3",
                              "homepage": "www.radio.com",
-                             "favicon": "icon"
+                             "favicon": "icon",
+                             "tags": "music",
+                             "country": "country"
                          }
                          """)
                 )

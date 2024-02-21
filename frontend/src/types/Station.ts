@@ -4,4 +4,6 @@ export type Station = {
     url_resolved: string;
     homepage: string;
     favicon: string;
+    tags: string;
+    country: string;
 };
