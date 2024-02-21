@@ -94,6 +94,7 @@ class RadioStationControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         [
+                            "Show all",
                             "Germany",
                             "Spain"
                         ]

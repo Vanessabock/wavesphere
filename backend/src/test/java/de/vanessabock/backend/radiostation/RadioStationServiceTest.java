@@ -79,7 +79,7 @@ class RadioStationServiceTest {
         List<String> actual = radioStationService.getAllCountriesForFilter();
 
         //THEN
-        assertThat(actual).containsExactlyInAnyOrder("Germany", "Spain");
+        assertThat(actual).containsExactlyInAnyOrder("Show all", "Germany", "Spain");
         verify(radioStationRepo, times(1)).findAll();
         verifyNoMoreInteractions(radioStationRepo);
     }
@@ -99,7 +99,7 @@ class RadioStationServiceTest {
         List<String> actual = radioStationService.getAllCountriesForFilter();
 
         //THEN
-        assertThat(actual).containsExactlyInAnyOrder("Germany");
+        assertThat(actual).containsExactlyInAnyOrder("Show all", "Germany");
         verify(radioStationRepo, times(1)).findAll();
         verifyNoMoreInteractions(radioStationRepo);
     }

@@ -57,6 +57,7 @@ public class RadioStationService {
                     }
                 });
         Collections.sort(countryFilter);
+        countryFilter.addFirst("Show all");
         return countryFilter;
     }
 }
