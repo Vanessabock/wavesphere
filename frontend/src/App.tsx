@@ -17,7 +17,7 @@ function App() {
     const [nowPlayingStation, setNowPlayingStation] = useState<Station>({
         stationuuid: "",
         name: "",
-        url: "",
+        url_resolved: "",
         homepage: "",
         favicon: ""
     })
@@ -49,7 +49,7 @@ function App() {
             setNowPlayingStation({
                 stationuuid: "",
                 name: "",
-                url: "",
+                url_resolved: "",
                 homepage: "",
                 favicon: "",
             })

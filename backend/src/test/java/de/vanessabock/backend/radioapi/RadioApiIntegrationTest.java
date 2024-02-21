@@ -147,14 +147,14 @@ public class RadioApiIntegrationTest {
                              {
                                  "stationuuid": "78012206-1aa1-11e9-a80b-52543be04c81",
                                  "name": "MANGORADIO",
-                                 "url": "http://stream.mangoradio.de/",
+                                 "url_resolved": "https://mangoradio.stream.laut.fm/mangoradio?t302=2024-02-06_03-57-04&uuid=fe4f7927-ca77-4f07-a326-bb2781c5f6dd",
                                  "homepage": "https://mangoradio.de/",
                                  "favicon": ""
                              },
                              {
                                  "stationuuid": "962cc6df-0601-11e8-ae97-52543be04c81",
                                  "name": "Dance Wave!",
-                                 "url": "https://dancewave.online/dance.mp3",
+                                 "url_resolved": "http://stream.dancewave.online:8080/dance.mp3",
                                  "homepage": "https://dancewave.online/",
                                  "favicon": "https://dancewave.online/dw_logo.png"
                              }
@@ -264,14 +264,14 @@ public class RadioApiIntegrationTest {
                              {
                                  "stationuuid": "78012206-1aa1-11e9-a80b-52543be04c81",
                                  "name": "MANGORADIO",
-                                 "url": "http://stream.mangoradio.de/",
+                                 "url_resolved": "https://mangoradio.stream.laut.fm/mangoradio?t302=2024-02-12_04-33-31&uuid=39515d11-8574-4ef1-a652-ad6ec5098a06",
                                  "homepage": "https://mangoradio.de/",
                                  "favicon": ""
                              },
                              {
                                  "stationuuid": "01e06e88-d5e0-4657-bb1f-3821c9f56fee",
                                  "name": "Radio Mango",
-                                 "url": "https://bcovlive-a.akamaihd.net/19b535b7499a4719a5c19e043063f5d9/ap-southeast-1/6034685947001/playlist.m3u8",
+                                 "url_resolved": "https://bcovlive-a.akamaihd.net/19b535b7499a4719a5c19e043063f5d9/ap-southeast-1/6034685947001/playlist.m3u8",
                                  "homepage": "https://www.radiomango.fm/",
                                  "favicon": ""
                                   }
