@@ -1,5 +1,6 @@
 package de.vanessabock.backend.radioapi.service;
 
+import de.vanessabock.backend.exception.NoSuchStationException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class RadioApiService {
         return Arrays.asList(response);
     }
 
-    public List<RadioStation> getStationsBySearchName(String limit, String search) {
+    public List<RadioStation> getStationsBySearchName(String limit, String search) throws NoSuchStationException {
         RadioStation[] response;
 
         response = restClient.get()
@@ -43,7 +44,7 @@ public class RadioApiService {
                 .body(RadioStation[].class);
 
         if (response == null){
-            return new ArrayList<>();
+            throw new NoSuchStationException("No stations found with name " + search + ".");
         }
 
         return Arrays.asList(response);

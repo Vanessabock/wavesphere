@@ -33,7 +33,6 @@ export const NowPlaying: React.FC<NowPlayingProps> = ({
         } else {
             togglePlayPause(stationOnNowPlayingScreen)
         }
-
     }
 
     const toggleSlider = (_event: Event, newValue: number | number[]) => {

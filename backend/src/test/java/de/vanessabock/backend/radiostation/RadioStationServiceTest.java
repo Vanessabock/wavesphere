@@ -1,5 +1,7 @@
 package de.vanessabock.backend.radiostation;
 
+import de.vanessabock.backend.exception.NoSuchStationException;
+import de.vanessabock.backend.exception.StationAlreadyInDatabaseException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.repository.RadioStationRepo;
 import de.vanessabock.backend.radiostation.service.RadioStationService;
@@ -10,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -33,7 +37,7 @@ class RadioStationServiceTest {
     }
 
     @Test
-    void getRadioStationsBySearchNameTest_WhenSearchNameBayInDatabaseAndLimit1_ReturnListWith1Object(){
+    void getRadioStationsBySearchNameTest_WhenSearchNameBayInDatabaseAndLimit1_ReturnListWith1Object() throws NoSuchStationException {
         //GIVEN
         Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon")));
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
@@ -48,22 +52,23 @@ class RadioStationServiceTest {
     }
 
     @Test
-    void getRadioStationsBySearchNameTest_WhenSearchNameBayNotInDatabaseAndLimit1_ReturnEmptyList(){
+    void getRadioStationsBySearchNameTest_WhenSearchNameBayNotInDatabaseAndLimit1_ThenThrowException() {
         //GIVEN
         Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon")));
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+        String notExistingSearchName = "Bla";
 
-        //WHEN
-        List<RadioStation> actual = radioStationService.getRadioStationsBySearchName(1, "Bay");
+        //WHEN & THEN
+        Exception exception = assertThrows(NoSuchStationException.class, () -> radioStationService.getRadioStationsBySearchName(20, notExistingSearchName));
 
-        //THEN
-        assertThat(actual).isEmpty();
-        verify(radioStationRepo, times(1)).findAll();
-        verifyNoMoreInteractions(radioStationRepo);
+        String expectedMessage = "No stations found with name " + notExistingSearchName + ".";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
-    void addStationTest_ifStationUuidIsEmpty_GenerateNewUuid(){
+    void addStationTest_ifStationUuidIsEmpty_GenerateNewUuid() throws StationAlreadyInDatabaseException {
         //GIVEN
         when(radioStationRepo.save(Mockito.any(RadioStation.class))).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
         RadioStation radioStation = new RadioStation("", "Radio", "www.radio.mp3", "www.radio.com", "icon");
@@ -79,7 +84,7 @@ class RadioStationServiceTest {
     }
 
     @Test
-    void addStationTest_ifStationUuidIsNotEmpty_SaveStation(){
+    void addStationTest_ifStationUuidIsNotEmpty_SaveStation() throws StationAlreadyInDatabaseException {
         //GIVEN
         Mockito.when(radioStationRepo.save(Mockito.any(RadioStation.class))).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
         RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon");
@@ -90,7 +95,26 @@ class RadioStationServiceTest {
 
         //THEN
         assertThat(actual).isEqualTo(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon"));
-        verify(radioStationRepo, times(1)).save(Mockito.any());
+        verify(radioStationRepo, times(1)).save(Mockito.any(RadioStation.class));
+        verify(radioStationRepo, times(1)).existsRadioStationByStationuuid(Mockito.any(String.class));
         verifyNoMoreInteractions(radioStationRepo);
     }
+
+    @Test
+    void addStationTest_ifStationUuidIsNotEmptyButStationAlreadyInDatabase_ThrowException() {
+        //GIVEN
+        when(radioStationRepo.existsRadioStationByStationuuid(Mockito.any(String.class))).thenReturn(true);
+        RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon");
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN & THEN
+        Exception exception = assertThrows(StationAlreadyInDatabaseException.class, () -> radioStationService.addRadioStation(radioStation));
+
+        String expectedMessage = "Station " + radioStation.getName() + " already exists in database.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+
 }

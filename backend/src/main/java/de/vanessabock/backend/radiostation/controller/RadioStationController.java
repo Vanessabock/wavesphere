@@ -1,5 +1,7 @@
 package de.vanessabock.backend.radiostation.controller;
 
+import de.vanessabock.backend.exception.NoSuchStationException;
+import de.vanessabock.backend.exception.StationAlreadyInDatabaseException;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import de.vanessabock.backend.radiostation.service.RadioStationService;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +24,12 @@ public class RadioStationController {
     }
 
     @GetMapping("getStationsByName/{limit}")
-    public List<RadioStation> getStationsBySearchNameWithLimit(@PathVariable int limit, @RequestParam String name){
+    public List<RadioStation> getStationsBySearchNameWithLimit(@PathVariable int limit, @RequestParam String name) throws NoSuchStationException {
         return radioStationService.getRadioStationsBySearchName(limit, name);
     }
 
     @PostMapping
-    public RadioStation addStation(@RequestBody RadioStation radioStation) {
+    public RadioStation addStation(@RequestBody RadioStation radioStation) throws StationAlreadyInDatabaseException {
         return radioStationService.addRadioStation(radioStation);
     }
 }
