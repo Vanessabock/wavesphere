@@ -5,6 +5,8 @@ import {StationCard} from "./station-card.tsx";
 import {User} from "../types/User.ts";
 import AddStationModal from "./add-station-modal.tsx";
 import AddStationFromApiModal from "./add-station-from-api-modal.tsx";
+import Select from '@mui/joy/Select';
+import Option from '@mui/joy/Option';
 
 type StationsListProps = {
     user: User
@@ -25,7 +27,7 @@ export const StationsList: React.FC<StationsListProps> = ({
     const [favourites, setFavourites] = useState<Station[]>([]);
     const [limit, setLimit] = useState<number>(20)
     const [search, setSearch] = useState<string>("")
-    const [countryFilter, setCountryFilter] = useState<String[]>([]);
+    const [countryFilter, setCountryFilter] = useState<string[]>([]);
 
     useEffect(() => {
         if (search) {
@@ -96,13 +98,18 @@ export const StationsList: React.FC<StationsListProps> = ({
         <div
             className="flex flex-col gap-5 p-5 pt-10 items-center bg-gradient-to-br min-h-screen bg-auto from-[#1c4462] to-[#509cb7]">
             {!showFavourites && <form className="flex gap-3 w-2/3 pr-14 justify-end items-center" onSubmit={onSearch}>
-                Search station <input value={search} onChange={(event) => setSearch(event.target.value)}
+                Search station <input className="bg-[#f8f1e6] text-[#17233c]" value={search} onChange={(event) => setSearch(event.target.value)}
                                       placeholder=""/>
                 <button className="border-transparent" type="button" onClick={onResetSearch}>x</button>
             </form>}
             {!showFavourites && <div className="flex flex-row w-2/3 pr-14 p-3 gap-3 justify-end items-center">
                 <AddStationModal saveStation={addStation}/>
                 <AddStationFromApiModal saveStation={addStation}/>
+            </div>}
+            {!showFavourites && <div className="flex flex-row w-2/3 pr-14 p-3 gap-3 justify-end items-center">
+                <Select placeholder="Choose a country…">
+                    {countryFilter.map(country => <Option value={country}>{country}</Option>)}
+                </Select>
             </div>}
             {!showFavourites && (<div className="flex flex-col justify-center pb-10 w-2/3">
                 {stations.map((s) => <StationCard key={s.stationuuid} station={s}
