@@ -60,4 +60,8 @@ public class RadioStationService {
         countryFilter.addFirst("Show all");
         return countryFilter;
     }
+
+    public List<RadioStation> getStationsFilteredByCountry(String country) {
+        return radioStationRepo.getRadioStationByCountry(country);
+    }
 }

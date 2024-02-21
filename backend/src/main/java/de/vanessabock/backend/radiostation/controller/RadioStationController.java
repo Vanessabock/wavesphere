@@ -33,6 +33,11 @@ public class RadioStationController {
         return radioStationService.getAllCountriesForFilter();
     }
 
+    @GetMapping("getStationsByCountry/{country}")
+    public List<RadioStation> getStationsFilteredByCountry(@PathVariable String country){
+        return radioStationService.getStationsFilteredByCountry(country);
+    }
+
     @PostMapping
     public RadioStation addStation(@RequestBody RadioStation radioStation) throws StationAlreadyInDatabaseException {
         return radioStationService.addRadioStation(radioStation);
