@@ -27,7 +27,7 @@ class RadioStationControllerIntegrationTest {
     @Test
     void getStationsByLimitTest_WhenLimit1_ThenReturnListWith1Object() throws Exception {
         //GIVEN
-        RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon");
+        RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country");
         radioStationRepo.save(radioStation);
 
         //WHEN
@@ -41,7 +41,9 @@ class RadioStationControllerIntegrationTest {
                              "name": "Radio",
                              "url_resolved": "www.radio.mp3",
                              "homepage": "www.radio.com",
-                             "favicon": "icon"
+                             "favicon": "icon",
+                             "tags": "music",
+                             "country": "country"
                          }]
                         """))
                 .andReturn();
@@ -52,7 +54,7 @@ class RadioStationControllerIntegrationTest {
     @Test
     void getStationsBySearchNameWithLimitTest_WhenSearchNameBayAndLimit1_ThenReturnListWith1Object() throws Exception {
         //GIVEN
-        RadioStation radioStation = new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon");
+        RadioStation radioStation = new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon", "music", "country");
         radioStationRepo.save(radioStation);
 
         //WHEN
@@ -66,7 +68,9 @@ class RadioStationControllerIntegrationTest {
                              "name": "Bayern 3",
                              "url_resolved": "www.radio.mp3",
                              "homepage": "www.radio.com",
-                             "favicon": "icon"
+                             "favicon": "icon",
+                             "tags": "music",
+                             "country": "country"
                          }]
                         """))
                 .andReturn();
@@ -86,7 +90,9 @@ class RadioStationControllerIntegrationTest {
                              "name": "Radio",
                              "url_resolved": "www.radio.mp3",
                              "homepage": "www.radio.com",
-                             "favicon": "icon"
+                             "favicon": "icon",
+                             "tags": "music",
+                             "country": "country"
                          }
                          """)
                 )
@@ -98,7 +104,9 @@ class RadioStationControllerIntegrationTest {
                              "name": "Radio",
                              "url_resolved": "www.radio.mp3",
                              "homepage": "www.radio.com",
-                             "favicon": "icon"
+                             "favicon": "icon",
+                             "tags": "music",
+                             "country": "country"
                           }
                         """))
                 .andExpect(jsonPath("$.stationuuid").isNotEmpty());
