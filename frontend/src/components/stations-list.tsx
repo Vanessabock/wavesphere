@@ -79,7 +79,7 @@ export const StationsList: React.FC<StationsListProps> = ({
 
     const addStation = (stationToSave: Station) => {
         axios.post("/api/stations", stationToSave).then((response) => {
-            setStations([...stations, response.data]);
+            // setStations([...stations, response.data]);
             setFavourites([...favourites, response.data]);
             if (user) {
                 updateUser({...user, favouriteStations: [...favourites, response.data]});
