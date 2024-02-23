@@ -63,7 +63,7 @@ function App() {
     } else {
       setNowPlayingStation(station);
       setStationOnNowPlayingScreen(station);
-      setAudioSrc(`http://localhost:8080/api/audio/play?streamUrl=${station.url_resolved}`)
+      setAudioSrc(`http://localhost:8080/api/audio/play?stationuuid=${station.stationuuid}`)
     }
   };
 
