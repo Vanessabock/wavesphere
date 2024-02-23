@@ -105,6 +105,26 @@ class RadioStationServiceTest {
     }
 
     @Test
+    void getStationsFilteredByCountryTest_WhenCountry_ThenReturnStationsInCountry(){
+        //GIVEN
+        Mockito.when(radioStationRepo.getRadioStationByCountry(Mockito.any(String.class))).thenReturn(List.of(
+                new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
+                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany")));
+
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<RadioStation> actual = radioStationService.getStationsFilteredByCountry(2,"Germany");
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder(
+                new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
+                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"));
+        verify(radioStationRepo, times(1)).getRadioStationByCountry(Mockito.any(String.class));
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
     void addStationTest_ifStationUuidIsEmpty_GenerateNewUuid() throws StationAlreadyInDatabaseException {
         //GIVEN
         when(radioStationRepo.save(Mockito.any(RadioStation.class))).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country"));

@@ -37,17 +37,6 @@ public class RadioStationService {
         return result;
     }
 
-    public RadioStation addRadioStation(RadioStation radioStation) throws StationAlreadyInDatabaseException {
-        if (radioStation.getStationuuid().isEmpty()){
-            return radioStationRepo.save(radioStation.withNewUUID());
-        } else {
-            if (radioStationRepo.existsRadioStationByStationuuid(radioStation.getStationuuid())){
-                throw new StationAlreadyInDatabaseException("Station " + radioStation.getName() + " already exists in database.");
-            }
-            return radioStationRepo.save(radioStation);
-        }
-    }
-
     public List<String> getAllCountriesForFilter() {
         List<String> countryFilter = new ArrayList<>();
         radioStationRepo.findAll()
@@ -60,4 +49,20 @@ public class RadioStationService {
         countryFilter.addFirst("Show all");
         return countryFilter;
     }
+
+    public List<RadioStation> getStationsFilteredByCountry(int limit, String country) {
+        return radioStationRepo.getRadioStationByCountry(country).stream().limit(limit).toList();
+    }
+
+    public RadioStation addRadioStation(RadioStation radioStation) throws StationAlreadyInDatabaseException {
+        if (radioStation.getStationuuid().isEmpty()){
+            return radioStationRepo.save(radioStation.withNewUUID());
+        } else {
+            if (radioStationRepo.existsRadioStationByStationuuid(radioStation.getStationuuid())){
+                throw new StationAlreadyInDatabaseException("Station " + radioStation.getName() + " already exists in database.");
+            }
+            return radioStationRepo.save(radioStation);
+        }
+    }
+
 }
