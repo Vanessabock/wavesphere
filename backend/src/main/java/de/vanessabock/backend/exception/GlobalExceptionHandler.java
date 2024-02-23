@@ -1,4 +1,4 @@
-package de.vanessabock.backend.exceptions;
+package de.vanessabock.backend.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

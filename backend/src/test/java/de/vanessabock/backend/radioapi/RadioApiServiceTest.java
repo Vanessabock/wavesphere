@@ -1,6 +1,6 @@
 package de.vanessabock.backend.radioapi;
 
-import de.vanessabock.backend.exceptions.NoSuchStationException;
+import de.vanessabock.backend.exception.NoSuchStationException;
 import de.vanessabock.backend.radioapi.service.RadioApiService;
 import de.vanessabock.backend.radiostation.model.RadioStation;
 import okhttp3.mockwebserver.MockResponse;
@@ -125,8 +125,8 @@ public class RadioApiServiceTest {
         List<RadioStation> actual = radioApiService.getStationsOrderedByVotes("2");
 
         //THEN
-        assertEquals(List.of(new RadioStation("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "http://stream.mangoradio.de/", "https://mangoradio.de/", ""),
-                new RadioStation("962cc6df-0601-11e8-ae97-52543be04c81", "Dance Wave!", "https://dancewave.online/dance.mp3", "https://dancewave.online/", "https://dancewave.online/dw_logo.png")),
+        assertEquals(List.of(new RadioStation("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "https://mangoradio.stream.laut.fm/mangoradio?t302=2024-02-06_03-57-04&uuid=fe4f7927-ca77-4f07-a326-bb2781c5f6dd", "https://mangoradio.de/", "", "mango,mangoradio,mongo,mongoradio,public radio,webradio", "Germany"),
+                new RadioStation("962cc6df-0601-11e8-ae97-52543be04c81", "Dance Wave!", "http://stream.dancewave.online:8080/dance.mp3", "https://dancewave.online/", "https://dancewave.online/dw_logo.png", "club dance electronic house trance", "Hungary")),
                 actual);
     }
 
@@ -233,8 +233,8 @@ public class RadioApiServiceTest {
         List<RadioStation> actual = radioApiService.getStationsBySearchName("mango", "2");
 
         //THEN
-        assertEquals(List.of(new RadioStation("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "http://stream.mangoradio.de/", "https://mangoradio.de/", ""),
-                        new RadioStation("01e06e88-d5e0-4657-bb1f-3821c9f56fee", "Radio Mango", "https://bcovlive-a.akamaihd.net/19b535b7499a4719a5c19e043063f5d9/ap-southeast-1/6034685947001/playlist.m3u8", "https://www.radiomango.fm/", "")),
+        assertEquals(List.of(new RadioStation("78012206-1aa1-11e9-a80b-52543be04c81", "MANGORADIO", "https://mangoradio.stream.laut.fm/mangoradio?t302=2024-02-12_04-33-31&uuid=39515d11-8574-4ef1-a652-ad6ec5098a06", "https://mangoradio.de/", "", "mango,mangoradio,mongo,mongoradio,public radio,webradio", "Germany"),
+                        new RadioStation("01e06e88-d5e0-4657-bb1f-3821c9f56fee", "Radio Mango", "https://bcovlive-a.akamaihd.net/19b535b7499a4719a5c19e043063f5d9/ap-southeast-1/6034685947001/playlist.m3u8", "https://www.radiomango.fm/", "", "", "India")),
                 actual);
     }
 

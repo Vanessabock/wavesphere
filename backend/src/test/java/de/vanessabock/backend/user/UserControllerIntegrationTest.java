@@ -69,9 +69,11 @@ class UserControllerIntegrationTest {
                             "favouriteStations":[{
                                 "stationuuid": "962cc6df-0601-11e8-ae97-52543be04c81",
                                 "name": "Dance Wave!",
-                                "url": "https://dancewave.online/dance.mp3",
+                                "url_resolved": "https://dancewave.online/dance.mp3",
                                 "homepage": "https://dancewave.online/",
-                                "favicon": "https://dancewave.online/dw_logo.png"
+                                "favicon": "https://dancewave.online/dw_logo.png",
+                                "tags": "music",
+                                "country": "country"
                                 }]
                         }
                                         """))
@@ -85,9 +87,11 @@ class UserControllerIntegrationTest {
                             "favouriteStations":[{
                                 "stationuuid": "962cc6df-0601-11e8-ae97-52543be04c81",
                                 "name": "Dance Wave!",
-                                "url": "https://dancewave.online/dance.mp3",
+                                "url_resolved": "https://dancewave.online/dance.mp3",
                                 "homepage": "https://dancewave.online/",
-                                "favicon": "https://dancewave.online/dw_logo.png"
+                                "favicon": "https://dancewave.online/dw_logo.png",
+                                "tags": "music",
+                                "country": "country"
                                 }]
                         }
                         """))

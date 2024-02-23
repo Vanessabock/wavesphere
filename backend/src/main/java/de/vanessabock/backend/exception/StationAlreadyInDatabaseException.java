@@ -1,4 +1,4 @@
-package de.vanessabock.backend.exceptions;
+package de.vanessabock.backend.exception;
 
 public class StationAlreadyInDatabaseException extends Exception {
     public StationAlreadyInDatabaseException(String message) {
