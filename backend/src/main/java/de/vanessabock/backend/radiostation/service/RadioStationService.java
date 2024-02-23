@@ -23,6 +23,10 @@ public class RadioStationService {
         return radioStationRepo.findAll().stream().limit(limit).toList();
     }
 
+    public RadioStation getStationByUuid(String stationuuid){
+        return radioStationRepo.findByStationuuid(stationuuid);
+    }
+
     public List<RadioStation> getRadioStationsBySearchName(int limit, String search) throws NoSuchStationException {
         List<RadioStation> result = radioStationRepo.findAll()
                 .stream()

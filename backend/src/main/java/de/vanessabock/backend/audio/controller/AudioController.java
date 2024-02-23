@@ -1,5 +1,7 @@
 package de.vanessabock.backend.audio.controller;
 
+import de.vanessabock.backend.radiostation.model.RadioStation;
+import de.vanessabock.backend.radiostation.service.RadioStationService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +15,19 @@ import java.net.URISyntaxException;
 @RequestMapping("/api/audio")
 public class AudioController {
 
+    private final RadioStationService radioStationService;
+
+    public AudioController(RadioStationService radioStationService) {
+        this.radioStationService = radioStationService;
+    }
+
     @GetMapping("/play")
-    public void playAudio(HttpServletResponse response, @RequestParam String streamUrl) {
+    public void playAudio(HttpServletResponse response, @RequestParam String stationuuid) {
+        RadioStation radioStation = radioStationService.getStationByUuid(stationuuid);
         try {
             response.setStatus(HttpServletResponse.SC_OK);
             // URL des Radio-Streams
-            URI url = new URI(streamUrl);
+            URI url = new URI(radioStation.getUrl_resolved());
             HttpURLConnection connection = (HttpURLConnection) url.toURL().openConnection();
             connection.setRequestProperty("Icy-MetaData", "1");
             // Verbindung öffnen
