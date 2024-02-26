@@ -56,7 +56,7 @@ class UserServiceTest {
         when(user.getAttribute("id")).thenReturn(id);
         when(userRepo.existsUserByGithubId(id.toString())).thenReturn(true);
         when(user.getAttribute("name")).thenReturn(name);
-        User expected = new User("existingId", id.toString(), name, new ArrayList<>());
+        User expected = new User("existingId", id.toString(), name, new ArrayList<>(), new ArrayList<>());
         when(userRepo.findUserByGithubId(id.toString())).thenReturn(expected);
 
         //WHEN
@@ -71,7 +71,7 @@ class UserServiceTest {
     @Test
     void updateUserTest_ShouldSaveUserToDatabaseAndReturnUser_WhenUserIsUpdated() {
         //GIVEN
-        User expected = new User("123", "123423", "User", new ArrayList<>());
+        User expected = new User("123", "123423", "User", new ArrayList<>(), new ArrayList<>());
         when(userRepo.save(any(User.class))).thenReturn(expected);
 
         //WHEN

@@ -30,7 +30,7 @@ class SecurityConfigTest {
         when(oauth2User.getAttribute("id")).thenReturn(githubId);
         when(userRepo.existsUserByGithubId(githubId.toString())).thenReturn(false);
 
-        User testUser = new User("123", "123423", "User", new ArrayList<>());
+        User testUser = new User("123", "123423", "User", new ArrayList<>(), new ArrayList<>());
         when(userRepo.save(testUser)).thenReturn(testUser);
 
         // WHEN
