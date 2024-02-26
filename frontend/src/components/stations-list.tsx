@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {Station} from "../types/Station.ts";
+import React, { useEffect, useState } from "react";
+import { Station } from "../types/Station.ts";
 import axios from "axios";
-import {StationCard} from "./station-card.tsx";
-import {User} from "../types/User.ts";
+import { StationCard } from "./station-card.tsx";
+import { User } from "../types/User.ts";
 import AddStationModal from "./add-station-modal.tsx";
 import AddStationFromApiModal from "./add-station-from-api-modal.tsx";
 
 type StationsListProps = {
-    user: User
-    nowPlaying: Station
-    showFavourites: boolean
-    updateUser: (user: User) => void
-    togglePlayPause: (station: Station) => void;
-}
+  user: User;
+  nowPlaying: Station;
+  showFavourites: boolean;
+  updateUser: (user: User) => void;
+  togglePlayPause: (station: Station) => void;
+};
 
 export const StationsList: React.FC<StationsListProps> = ({
                                                               user,
@@ -71,12 +71,12 @@ export const StationsList: React.FC<StationsListProps> = ({
     }
 
     const onResetSearch = () => {
-        // reset search when "x" is clicked
-        setSearch("")
-        axios.get(`/api/stations/getStations/${limit}`).then((response) => {
-            setStations(response.data)
-        })
-    }
+      // reset search when "x" is clicked
+      setSearch("");
+      axios.get(`/api/stations/getStations/${limit}`).then((response) => {
+        setStations(response.data);
+      });
+    };
 
     const toggleFavourite = (station: Station): void => {
         let updatedFavourites: Station[];
@@ -130,44 +130,90 @@ export const StationsList: React.FC<StationsListProps> = ({
     }
 
     return (
-        <div
-            className="flex flex-col gap-5 p-5 pt-10 items-center bg-gradient-to-br min-h-screen bg-auto from-[#1c4462] to-[#509cb7]">
-            {!showFavourites && <form className="flex gap-3 w-2/3 pr-14 justify-end items-center" onSubmit={onSearch}>
-                Search station <input className="bg-[#f8f1e6] text-[#17233c]" value={search}
-                                      onChange={(event) => setSearch(event.target.value)}
-                                      placeholder=""/>
-                <button className="border-transparent" type="button" onClick={onResetSearch}>x</button>
-            </form>}
-            {!showFavourites && <div className="flex flex-row w-2/3 pr-14 p-3 gap-3 justify-end items-center">
-                <AddStationModal saveStation={addStation}/>
-                <AddStationFromApiModal saveStation={addStation}/>
-            </div>}
-            {!showFavourites && <div className="flex flex-row w-2/3 pr-14 gap-3 justify-end items-center">
-                Select a country to filter
-                <select className="bg-[#f8f1e6] text-[#17233c] w-1/2 h-6 rounded"
-                        onChange={onCountryFilterChanged}>{countryFilterElems.map(country => <option key={country}
-                                                                                                     value={country}>{country}</option>)}
-                </select>
-            </div>}
-            {!showFavourites && (<div className="flex flex-col justify-center pb-10 w-2/3">
-                {stations.map((s) => <StationCard key={s.stationuuid} station={s}
-                                                  isPlaying={s.stationuuid === nowPlaying.stationuuid}
-                                                  togglePlayPause={togglePlayPause}
-                                                  isFavourite={favourites.some(fav => fav.stationuuid === s.stationuuid)}
-                                                  toggleFavourite={toggleFavourite}/>)}
-
-            </div>)}
-            {showFavourites && (<div className="flex flex-col p-10 w-2/3">
-                {favourites.map((s) => <StationCard key={s.stationuuid} station={s}
-                                                    isPlaying={s.stationuuid === nowPlaying.stationuuid}
-                                                    togglePlayPause={togglePlayPause}
-                                                    isFavourite={favourites.some(fav => fav.stationuuid === s.stationuuid)}
-                                                    toggleFavourite={toggleFavourite}/>)}
-
-            </div>)}
-            {!showFavourites && (
-                <button className="flex bg-[#f8f1e6] p-1 m-5 mb-10 text-[#17233c]" onClick={onShowMore}> Show
-                    more</button>)}
-        </div>
-    )
+      <div className="flex min-h-screen flex-col items-center gap-5 bg-gradient-to-br from-[#1c4462] to-[#509cb7] bg-auto p-5 pt-10">
+        {!showFavourites && (
+          <form
+            className="flex w-2/3 items-center justify-end gap-3 pr-14"
+            onSubmit={onSearch}
+          >
+            Search station{" "}
+            <input
+              className="bg-[#f8f1e6] text-[#17233c]"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder=""
+            />
+            <button
+              className="border-transparent"
+              type="button"
+              onClick={onResetSearch}
+            >
+              x
+            </button>
+          </form>
+        )}
+        {!showFavourites && (
+          <div className="flex w-2/3 flex-row items-center justify-end gap-3 p-3 pr-14">
+            <AddStationModal saveStation={addStation} />
+            <AddStationFromApiModal saveStation={addStation} />
+          </div>
+        )}
+        {!showFavourites && (
+          <div className="flex w-2/3 flex-row items-center justify-end gap-3 pr-14">
+            <p> Select a country to filter </p>
+            <select
+              className="h-6 w-1/2 rounded bg-[#f8f1e6] text-[#17233c]"
+              onChange={onCountryFilterChanged}
+            >
+              {countryFilterElems.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        {!showFavourites && (
+          <div className="flex w-2/3 flex-col justify-center pb-10">
+            {stations.map((s) => (
+              <StationCard
+                key={s.stationuuid}
+                station={s}
+                isPlaying={s.stationuuid === nowPlaying.stationuuid}
+                togglePlayPause={togglePlayPause}
+                isFavourite={favourites.some(
+                  (fav) => fav.stationuuid === s.stationuuid,
+                )}
+                toggleFavourite={toggleFavourite}
+              />
+            ))}
+          </div>
+        )}
+        {showFavourites && (
+          <div className="flex w-2/3 flex-col p-10">
+            {favourites.map((s) => (
+              <StationCard
+                key={s.stationuuid}
+                station={s}
+                isPlaying={s.stationuuid === nowPlaying.stationuuid}
+                togglePlayPause={togglePlayPause}
+                isFavourite={favourites.some(
+                  (fav) => fav.stationuuid === s.stationuuid,
+                )}
+                toggleFavourite={toggleFavourite}
+              />
+            ))}
+          </div>
+        )}
+        {!showFavourites && (
+          <button
+            className="m-5 mb-10 flex bg-[#f8f1e6] p-1 text-[#17233c]"
+            onClick={onShowMore}
+          >
+            {" "}
+            Show more
+          </button>
+        )}
+      </div>
+    );
 }

@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface RadioStationRepo extends MongoRepository<RadioStation, String> {
     boolean existsRadioStationByStationuuid(String statiouuid);
+    RadioStation findByStationuuid(String stationuuid);
     List<RadioStation> getRadioStationByCountry(String country);
 
 }
