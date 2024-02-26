@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -80,6 +81,35 @@ class UserServiceTest {
         //THEN
         assertEquals(expected, actual);
         verify(userRepo, times(1)).save(expected);
+        verifyNoMoreInteractions(userRepo);
+    }
+
+    @Test
+    void getUserByIdTest_whenUserExists_returnUser(){
+        // GIVEN
+        User expected = new User("123", "123423", "User", new ArrayList<>(), new ArrayList<>());
+        when(userRepo.findById(any(String.class))).thenReturn(Optional.of(expected));
+
+        // WHEN
+        User actual = userService.getUserById("123");
+
+        // THEN
+        assertEquals(expected, actual);
+        verify(userRepo, times(1)).findById(any(String.class));
+        verifyNoMoreInteractions(userRepo);
+    }
+
+    @Test
+    void getUserByIdTest_whenUserNotExists_returnNull(){
+        // GIVEN
+        when(userRepo.findById(any(String.class))).thenReturn(Optional.empty());
+
+        // WHEN
+        User actual = userService.getUserById("123");
+
+        // THEN
+        assertNull(actual);
+        verify(userRepo, times(1)).findById(any(String.class));
         verifyNoMoreInteractions(userRepo);
     }
 }
