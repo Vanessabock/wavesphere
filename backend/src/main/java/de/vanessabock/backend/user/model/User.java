@@ -10,6 +10,7 @@ public record User(
         String id,
         String githubId,
         String name,
-        List<RadioStation> favouriteStations
+        List<RadioStation> favouriteStations,
+        List<ListeningStatistic> listeningStatistics
 ) {
 }
