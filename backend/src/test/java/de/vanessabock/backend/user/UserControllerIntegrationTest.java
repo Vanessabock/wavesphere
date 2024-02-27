@@ -31,7 +31,7 @@ class UserControllerIntegrationTest {
     @Test
     void getLoggedInUserTest_shouldReturnUser_whenUserLoggedIn() throws Exception {
         //GIVEN
-        userRepo.save(new User("123456", "123456", "user", new ArrayList<>()));
+        userRepo.save(new User("123456", "123456", "user", new ArrayList<>(), new ArrayList<>()));
 
         //WHEN
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/user")
@@ -44,7 +44,8 @@ class UserControllerIntegrationTest {
                             "id":"123456",
                             "githubId": "123456",
                             "name":"user",
-                            "favouriteStations":[]
+                            "favouriteStations":[],
+                            "listeningStatistics":[]
                         }
                         """))
                 .andReturn();
@@ -55,7 +56,7 @@ class UserControllerIntegrationTest {
     @Test
     void updateUserTest_shouldUpdatedUser_whenUserIsUpdated() throws Exception {
         //GIVEN
-        userRepo.save(new User("123456", "123456", "user", new ArrayList<>()));
+        userRepo.save(new User("123456", "123456", "user", new ArrayList<>(), new ArrayList<>()));
 
         //WHEN
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/api/user")
@@ -74,7 +75,8 @@ class UserControllerIntegrationTest {
                                 "favicon": "https://dancewave.online/dw_logo.png",
                                 "tags": "music",
                                 "country": "country"
-                                }]
+                                }],
+                            "listeningStatistics":[]
                         }
                                         """))
                 //THEN
@@ -92,7 +94,8 @@ class UserControllerIntegrationTest {
                                 "favicon": "https://dancewave.online/dw_logo.png",
                                 "tags": "music",
                                 "country": "country"
-                                }]
+                                }],
+                            "listeningStatistics":[]
                         }
                         """))
                 .andReturn();

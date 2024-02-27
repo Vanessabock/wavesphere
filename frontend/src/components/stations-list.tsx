@@ -130,7 +130,7 @@ export const StationsList: React.FC<StationsListProps> = ({
     }
 
     return (
-      <div className="flex min-h-screen flex-col items-center gap-5 bg-gradient-to-br from-[#1c4462] to-[#509cb7] bg-auto p-5 pt-10">
+      <div className="flex min-h-screen flex-col items-center gap-5 bg-gradient-to-br from-[#1c4462] to-[#509cb7] bg-auto p-5 pt-10 text-[#f8f1e6]">
         {!showFavourites && (
           <form
             className="flex w-2/3 items-center justify-end gap-3 pr-14"
@@ -153,12 +153,6 @@ export const StationsList: React.FC<StationsListProps> = ({
           </form>
         )}
         {!showFavourites && (
-          <div className="flex w-2/3 flex-row items-center justify-end gap-3 p-3 pr-14">
-            <AddStationModal saveStation={addStation} />
-            <AddStationFromApiModal saveStation={addStation} />
-          </div>
-        )}
-        {!showFavourites && (
           <div className="flex w-2/3 flex-row items-center justify-end gap-3 pr-14">
             <p> Select a country to filter </p>
             <select
@@ -171,6 +165,12 @@ export const StationsList: React.FC<StationsListProps> = ({
                 </option>
               ))}
             </select>
+          </div>
+        )}
+        {!showFavourites && (
+          <div className="flex w-2/3 flex-row items-center justify-end gap-3 p-3 pb-5 pr-14">
+            <AddStationModal saveStation={addStation} />
+            <AddStationFromApiModal saveStation={addStation} />
           </div>
         )}
         {!showFavourites && (

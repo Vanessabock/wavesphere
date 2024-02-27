@@ -85,7 +85,7 @@ public class SecurityConfig {
         boolean hasUser = userRepo.existsUserByGithubId(githubId.toString());
 
         if (!hasUser) {
-            User newUser = new User(UUID.randomUUID().toString(), githubId.toString(), user.getAttribute("login"), new ArrayList<>());
+            User newUser = new User(UUID.randomUUID().toString(), githubId.toString(), user.getAttribute("login"), new ArrayList<>(), new ArrayList<>());
             userRepo.save(newUser);
         }
 

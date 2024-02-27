@@ -9,6 +9,7 @@ import { Login } from "./components/login.tsx";
 import { StationsList } from "./components/stations-list.tsx";
 import { Station } from "./types/Station.ts";
 import { NowPlaying } from "./components/now-playing.tsx";
+import { UserStatistics } from "./components/user-statistics.tsx";
 
 function App() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ function App() {
   });
   const [stationOnNowPlayingScreen, setStationOnNowPlayingScreen] =
     useState<Station>(nowPlayingStation);
-  const [audioSrc, setAudioSrc] = useState<string>("")
+  const [audioSrc, setAudioSrc] = useState<string>("");
 
   useEffect(() => {
     axios.get("/api/user").then((response) => {
@@ -63,7 +64,14 @@ function App() {
     } else {
       setNowPlayingStation(station);
       setStationOnNowPlayingScreen(station);
-      setAudioSrc(`http://localhost:8080/api/audio/play?stationuuid=${station.stationuuid}`)
+      if (user){
+        setAudioSrc(
+          `http://localhost:8080/api/audio/play?stationuuid=${station.stationuuid}&userId=${user.id}`
+        )
+      } else {
+        setAudioSrc(
+          `http://localhost:8080/api/audio/play?stationuuid=${station.stationuuid}`
+      );}
     }
   };
 
@@ -97,6 +105,7 @@ function App() {
             />
           }
         />
+        <Route path="/user-statistics" element={<UserStatistics />} />
       </Routes>
       <NowPlaying
         nowPlayingStation={nowPlayingStation}

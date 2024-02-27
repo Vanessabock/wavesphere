@@ -37,6 +37,36 @@ class RadioStationServiceTest {
     }
 
     @Test
+    void getStationByUuidTest_whenStationInRepo_returnStation(){
+        //GIVEN
+        when(radioStationRepo.findByStationuuid(Mockito.any(String.class))).thenReturn(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country"));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        RadioStation actual = radioStationService.getStationByUuid("1234");
+
+        //THEN
+        assertThat(actual).isEqualTo(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country"));
+        verify(radioStationRepo, times(1)).findByStationuuid(Mockito.any(String.class));
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getStationByUuidTest_whenStationNotInRepo_returnNull(){
+        //GIVEN
+        when(radioStationRepo.findByStationuuid(Mockito.any(String.class))).thenReturn(null);
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        RadioStation actual = radioStationService.getStationByUuid("1234");
+
+        //THEN
+        assertThat(actual).isNull();
+        verify(radioStationRepo, times(1)).findByStationuuid(Mockito.any(String.class));
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
     void getRadioStationsBySearchNameTest_WhenSearchNameBayInDatabaseAndLimit1_ReturnListWith1Object() throws NoSuchStationException {
         //GIVEN
         Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon", "music", "country")));
