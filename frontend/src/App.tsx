@@ -66,11 +66,11 @@ function App() {
       setStationOnNowPlayingScreen(station);
       if (user){
         setAudioSrc(
-          `http://localhost:8080/api/audio/play?stationuuid=${station.stationuuid}&userId=${user.id}`
+          `/api/audio/play?stationuuid=${station.stationuuid}&userId=${user.id}`
         )
       } else {
         setAudioSrc(
-          `http://localhost:8080/api/audio/play?stationuuid=${station.stationuuid}`
+          `/api/audio/play?stationuuid=${station.stationuuid}`
       );}
     }
   };
