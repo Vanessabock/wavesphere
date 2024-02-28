@@ -5,6 +5,8 @@ import de.vanessabock.backend.radiostation.service.RadioStationService;
 import de.vanessabock.backend.user.model.User;
 import de.vanessabock.backend.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -12,7 +14,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/audio")
@@ -27,14 +28,11 @@ public class AudioController {
     }
 
     @GetMapping("/play")
-    public void playAudio(HttpServletResponse response, @RequestParam String stationuuid, @RequestParam Optional<String> userId) {
+    public void playAudio(HttpServletResponse response, @RequestParam String stationuuid, @AuthenticationPrincipal OAuth2User principal) {
         RadioStation radioStation = radioStationService.getStationByUuid(stationuuid);
 
         // get current user if existing
-        User user = null;
-        if (userId.isPresent()){
-            user = userService.getUserById(userId.get());
-        }
+        User user = userService.getLoggedInUser(principal);
 
         long startTime = 0;
         try {
