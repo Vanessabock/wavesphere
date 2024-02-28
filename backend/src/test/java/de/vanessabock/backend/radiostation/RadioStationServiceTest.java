@@ -28,7 +28,7 @@ class RadioStationServiceTest {
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
 
         //WHEN
-        List<RadioStation> actual = radioStationService.getRadioStations(1);
+        List<RadioStation> actual = radioStationService.getRadioStationsWithLimit(1);
 
         //THEN
         assertThat(actual).containsExactlyInAnyOrder(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country"));
