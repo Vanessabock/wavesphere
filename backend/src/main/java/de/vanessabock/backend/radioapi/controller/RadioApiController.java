@@ -17,11 +17,6 @@ public class RadioApiController {
         this.radioApiService = radioApiService;
     }
 
-    @GetMapping
-    public List<RadioStation> getStationsOrderedByVotes(@RequestParam String limit) {
-        return radioApiService.getStationsOrderedByVotes(limit);
-    }
-
     @GetMapping("/{search}")
     public List<RadioStation> getStationsBySearchName(@PathVariable String search, @RequestParam String limit) throws NoSuchStationException {
         return radioApiService.getStationsBySearchName(limit, search);

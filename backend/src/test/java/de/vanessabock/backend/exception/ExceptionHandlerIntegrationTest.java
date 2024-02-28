@@ -69,7 +69,7 @@ class ExceptionHandlerIntegrationTest {
         String notExistingName = "Bla";
 
         //WHEN
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/stations/getStationsByName/10?name={search}", notExistingName))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/stations/getStations/1?name={search}&country=&tag=", notExistingName))
 
                 //THEN
                 .andExpect(status().is(404));

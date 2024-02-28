@@ -9,10 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -27,13 +25,15 @@ class RadioStationControllerIntegrationTest {
 
     @DirtiesContext
     @Test
-    void getStationsByLimitTest_WhenLimit1_ThenReturnListWith1Object() throws Exception {
+    void getStationsTest_WhenLimit1_ThenReturnListWith1Object() throws Exception {
         //GIVEN
-        RadioStation radioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country");
-        radioStationRepo.save(radioStation);
+        RadioStation radioStation1 = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country");
+        RadioStation radioStation2 = new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere");
+        radioStationRepo.save(radioStation1);
+        radioStationRepo.save(radioStation2);
 
         //WHEN
-        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStations/1"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStations/1?name=&country=&tag="))
 
                 //THEN
                 .andExpect(status().isOk())
@@ -52,13 +52,15 @@ class RadioStationControllerIntegrationTest {
 
     @DirtiesContext
     @Test
-    void getStationsBySearchNameWithLimitTest_WhenSearchNameBayAndLimit1_ThenReturnListWith1Object() throws Exception {
+    void getStationsTest_WhenSearchNameBayAndLimit1_ThenReturnListWith1Object() throws Exception {
         //GIVEN
-        RadioStation radioStation = new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon", "music", "country");
-        radioStationRepo.save(radioStation);
+        RadioStation radioStation1 = new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon", "music", "country");
+        RadioStation radioStation2 = new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere");
+        radioStationRepo.save(radioStation1);
+        radioStationRepo.save(radioStation2);
 
         //WHEN
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStationsByName/1?name=Bay"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStations/1?name=bay&country=&tag="))
 
                 //THEN
                 .andExpect(status().isOk())
@@ -72,10 +74,61 @@ class RadioStationControllerIntegrationTest {
                              "tags": "music",
                              "country": "country"
                          }]
-                        """))
-                .andReturn();
+                        """));
+    }
 
-        assertEquals(200, mvcResult.getResponse().getStatus());
+    @DirtiesContext
+    @Test
+    void getStationsTest_WhenCountrySomewhereAndLimit1_ThenReturnListWith1Object() throws Exception {
+        //GIVEN
+        RadioStation radioStation1 = new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon", "music", "country");
+        RadioStation radioStation2 = new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere");
+        radioStationRepo.save(radioStation1);
+        radioStationRepo.save(radioStation2);
+
+        //WHEN
+        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStations/1?name=&country=somewhere&tag="))
+
+                //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        [{
+                             "stationuuid": "5678",
+                             "name": "Music",
+                             "url_resolved": "www.music.mp3",
+                             "homepage": "www.music.com",
+                             "favicon": "pic",
+                             "tags": "mute",
+                             "country": "somewhere"
+                         }]
+                        """));
+    }
+
+    @DirtiesContext
+    @Test
+    void getStationsTest_WhenTagMusicAndLimit1_ThenReturnListWith1Object() throws Exception {
+        //GIVEN
+        RadioStation radioStation1 = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music,pop", "country");
+        RadioStation radioStation2 = new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere");
+        radioStationRepo.save(radioStation1);
+        radioStationRepo.save(radioStation2);
+
+        //WHEN
+        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStations/1?name=&country=&tag=music"))
+
+                //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        [{
+                             "stationuuid": "1234",
+                             "name": "Radio",
+                             "url_resolved": "www.radio.mp3",
+                             "homepage": "www.radio.com",
+                             "favicon": "icon",
+                             "tags": "music,pop",
+                             "country": "country"
+                         }]
+                        """));
     }
 
     @DirtiesContext
@@ -98,33 +151,6 @@ class RadioStationControllerIntegrationTest {
                             "Germany",
                             "Spain"
                         ]
-                        """));
-    }
-
-    @DirtiesContext
-    @Test
-    void getStationsFilteredByCountryTest_WhenCountrySelected_ThenReturnListWithStationsInCountry() throws Exception {
-        //GIVEN
-        RadioStation germanRadioStation = new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany");
-        RadioStation spanishRadioStation = new RadioStation("5678", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Spain");
-        radioStationRepo.save(germanRadioStation);
-        radioStationRepo.save(spanishRadioStation);
-
-        //WHEN
-        mvc.perform(MockMvcRequestBuilders.get("/api/stations/getStationsByCountry/1?country=Germany"))
-
-                //THEN
-                .andExpect(status().isOk())
-                .andExpect(content().json("""
-                        [{
-                             "stationuuid": "1234",
-                             "name": "Radio",
-                             "url_resolved": "www.radio.mp3",
-                             "homepage": "www.radio.com",
-                             "favicon": "icon",
-                             "tags": "music",
-                             "country": "Germany"
-                         }]
                         """));
     }
 

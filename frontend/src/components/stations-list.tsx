@@ -27,55 +27,40 @@ export const StationsList: React.FC<StationsListProps> = ({
     const [search, setSearch] = useState<string>("")
     const [countryFilterElems, setCountryFilterElems] = useState<string[]>([]);
     const [country, setCountry] = useState<string>("")
+    const [tag, setTag] = useState<string>("");
 
     useEffect(() => {
-        if (search) {
-            // get limit results of search when limit changed
-            axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
-                setStations(response.data)
-            })
-                .catch(() => console.log("No Result for radio station in database with search name"));
-        } else if (country) {
-            // get limit results of country when limit changed
-            axios.get(`/api/stations/getStationsByCountry/${limit}?country=${country}`).then(response =>
-                setStations(response.data));
-        } else {
-            // get limit results of all stations when limit changed
-            axios.get(`/api/stations/getStations/${limit}`).then((response) => {
-                setStations(response.data)
-            })
-        }
-        // get all possible countries from stations to setup filter
-        axios.get("/api/stations/getAllCountries").then((response => {
-            setCountryFilterElems(response.data)
-        }))
-    }, [limit]);
+      // get Data from DB
+      fetchData();
+      // get all possible countries from stations to setup filter
+      axios.get("/api/stations/getAllCountries").then((response) => {
+        setCountryFilterElems(response.data);
+      });
+    }, [limit, country]);
 
     useEffect(() => {
-        // set favourites when user changed
-        user && setFavourites(user.favouriteStations);
+      // set favourites when user changed
+      user && setFavourites(user.favouriteStations);
     }, [user]);
 
-    const onSearch = (event: { preventDefault: () => void; }) => {
-        // reset country filter when use search field
-        setCountry("");
-        // search for station name
-        axios.get(`/api/stations/getStationsByName/${limit}?name=${search}`).then((response) => {
-            setStations(response.data)
-        })
-            // catch if no station with name in database
-            .catch(() => {
-                console.log("No Result for radio station in database with search name")
-            });
-        event.preventDefault();
-    }
+    const fetchData = () => {
+      axios
+        .get(
+          `/api/stations/getStations/${limit}?name=${search}&country=${country}&tag=${tag}`,
+        )
+        .then((response) => {
+          setStations(response.data);
+        });
+    };
+
+    const onSearch = (event: { preventDefault: () => void }) => {
+      fetchData();
+      event.preventDefault();
+    };
 
     const onResetSearch = () => {
       // reset search when "x" is clicked
       setSearch("");
-      axios.get(`/api/stations/getStations/${limit}`).then((response) => {
-        setStations(response.data);
-      });
     };
 
     const toggleFavourite = (station: Station): void => {
@@ -113,23 +98,26 @@ export const StationsList: React.FC<StationsListProps> = ({
             // catch if station already in database
             .catch(() => console.log("Add failed. Station already exists in database"));
     };
-    const onCountryFilterChanged = (event: { target: { value: any; }; }) => {
-        // reset search field when use country filter
-        setSearch("")
-        // set country use state
-        setCountry(event.target.value)
-        if (event.target.value === "Show all") {
-            // get all stations when "Show all" selected
-            axios.get(`/api/stations/getStations/${limit}`).then((response) => {
-                setStations(response.data)
-            })
-        }
-        // make filter request with selected country
-        axios.get(`/api/stations/getStationsByCountry/${limit}?country=${event.target.value}`).then(response =>
-            setStations(response.data));
-    }
+    const onCountryFilterChanged = (event: {
+      target: { value: React.SetStateAction<string> };
+    }) => {
+      if (event.target.value === "Show all") {
+        setCountry("");
+      } else {
+          setCountry(event.target.value);
+      }
+    };
 
-    return (
+  const onTagSearch = (event: { preventDefault: () => void }) => {
+    fetchData();
+    event.preventDefault();
+  }
+
+  const onResetTag = () => {
+    setTag("")
+  }
+
+  return (
       <div className="flex min-h-screen flex-col items-center gap-5 bg-gradient-to-br from-[#1c4462] to-[#509cb7] bg-auto p-5 pt-10 text-[#f8f1e6]">
         {!showFavourites && (
           <form
@@ -147,6 +135,27 @@ export const StationsList: React.FC<StationsListProps> = ({
               className="border-transparent"
               type="button"
               onClick={onResetSearch}
+            >
+              x
+            </button>
+          </form>
+        )}
+        {!showFavourites && (
+          <form
+            className="flex w-2/3 items-center justify-end gap-3 pr-14"
+            onSubmit={onTagSearch}
+          >
+            Search for genre{" "}
+            <input
+              className="bg-[#f8f1e6] text-[#17233c]"
+              value={tag}
+              onChange={(event) => setTag(event.target.value)}
+              placeholder=""
+            />
+            <button
+              className="border-transparent"
+              type="button"
+              onClick={onResetTag}
             >
               x
             </button>

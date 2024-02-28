@@ -19,26 +19,35 @@ public class RadioStationService {
         this.radioStationRepo = radioStationRepo;
     }
 
-    public List<RadioStation> getRadioStations(int limit) {
-        return radioStationRepo.findAll().stream().limit(limit).toList();
+    public List<RadioStation> getStations(int limit, String name, String country, String tag) throws NoSuchStationException {
+        List<RadioStation> result = radioStationRepo.findAll();
+
+        if (!name.isEmpty()) {
+            result = result.stream()
+                    .filter(station -> station.getName().toLowerCase().contains(name.toLowerCase()))
+                    .limit(limit)
+                    .toList();
+        }
+
+        if (!country.isEmpty()) {
+            result = result.stream().filter(station -> station.getCountry().equals(country)).toList();
+        }
+
+        if (!tag.isEmpty()) {
+            result = result.stream().filter(station -> station.getTags().toLowerCase().contains(tag.toLowerCase())).toList();
+        }
+
+        result = result.stream().limit(limit).toList();
+
+        if (result.isEmpty()){
+            throw new NoSuchStationException("No stations found.");
+        }
+
+        return result;
     }
 
     public RadioStation getStationByUuid(String stationuuid){
         return radioStationRepo.findByStationuuid(stationuuid);
-    }
-
-    public List<RadioStation> getRadioStationsBySearchName(int limit, String search) throws NoSuchStationException {
-        List<RadioStation> result = radioStationRepo.findAll()
-                .stream()
-                .filter(station -> station.getName().toLowerCase().contains(search.toLowerCase()))
-                .limit(limit)
-                .toList();
-
-        if (result.isEmpty()){
-            throw new NoSuchStationException("No stations found with name " + search + ".");
-        }
-
-        return result;
     }
 
     public List<String> getAllCountriesForFilter() {
@@ -54,9 +63,6 @@ public class RadioStationService {
         return countryFilter;
     }
 
-    public List<RadioStation> getStationsFilteredByCountry(int limit, String country) {
-        return radioStationRepo.getRadioStationByCountry(country).stream().limit(limit).toList();
-    }
 
     public RadioStation addRadioStation(RadioStation radioStation) throws StationAlreadyInDatabaseException {
         if (radioStation.getStationuuid().isEmpty()){
@@ -68,5 +74,4 @@ public class RadioStationService {
             return radioStationRepo.save(radioStation);
         }
     }
-
 }
