@@ -40,10 +40,14 @@ public class RadioStationService {
         result = result.stream().limit(limit).toList();
 
         if (result.isEmpty()){
-            throw new NoSuchStationException("No stations found");
+            throw new NoSuchStationException("No stations found.");
         }
 
         return result;
+    }
+
+    public RadioStation getStationByUuid(String stationuuid){
+        return radioStationRepo.findByStationuuid(stationuuid);
     }
 
     public List<String> getAllCountriesForFilter() {

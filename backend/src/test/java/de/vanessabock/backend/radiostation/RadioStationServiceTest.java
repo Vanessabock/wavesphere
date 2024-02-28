@@ -24,16 +24,144 @@ class RadioStationServiceTest {
     @Test
     void getRadioStationsTest_WhenLimit1_ReturnListWith1Object() {
         //GIVEN
-        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country")));
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country"),
+                new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere")));
         RadioStationService radioStationService = new RadioStationService(radioStationRepo);
 
         //WHEN
-        List<RadioStation> actual = radioStationService.getRadioStationsWithLimit(1);
+        List<RadioStation> actual = radioStationService.getStations(1, "", "", "");
 
         //THEN
         assertThat(actual).containsExactlyInAnyOrder(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country"));
         verify(radioStationRepo, times(1)).findAll();
         verifyNoMoreInteractions(radioStationRepo);
+    }
+    @Test
+    void getRadioStationsTest_WhenSearchNameBayAndLimit1_ReturnListWith1Object() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music", "country"),
+                new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<RadioStation> actual = radioStationService.getStations(1, "bay", "", "");
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music", "country"));
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getRadioStationsTest_WhenCountrySomewhereAndLimit1_ReturnListWith1Object() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music", "country"),
+                new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<RadioStation> actual = radioStationService.getStations(1, "", "somewhere", "");
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder(new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere"));
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getRadioStationsTest_WhenTagMusicAndLimit1_ReturnListWith1Object() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music,pop", "country"),
+                new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<RadioStation> actual = radioStationService.getStations(1, "", "", "pop");
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music,pop", "country"));
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getRadioStationsTest_WhenCountrySomewhereAndSearchNameMuAndLimit1_ReturnListWith1Object() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music,pop", "country"),
+                new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<RadioStation> actual = radioStationService.getStations(1, "mu", "somewhere", "");
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder(new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute", "somewhere"));
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getRadioStationsTest_WhenCountrySomewhereAndTagHipAndLimit1_ReturnListWith1Object() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music,pop", "country"),
+                new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute,hip", "somewhere")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<RadioStation> actual = radioStationService.getStations(1, "", "somewhere", "hip");
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder(new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute,hip", "somewhere"));
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getRadioStationsTest_WhenSearchNameMuAndTagHipAndLimit1_ReturnListWith1Object() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music,pop", "country"),
+                new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute,hip", "somewhere")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<RadioStation> actual = radioStationService.getStations(1, "mu", "", "hip");
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder(new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute,hip", "somewhere"));
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getRadioStationsTest_WhenSearchNameMuAndCountrySomewhereAndTagHipAndLimit1_ReturnListWith1Object() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music,pop", "country"),
+                new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute,hip", "somewhere")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN
+        List<RadioStation> actual = radioStationService.getStations(1, "mu", "somewhere", "hip");
+
+        //THEN
+        assertThat(actual).containsExactlyInAnyOrder(new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute,hip", "somewhere"));
+        verify(radioStationRepo, times(1)).findAll();
+        verifyNoMoreInteractions(radioStationRepo);
+    }
+
+    @Test
+    void getRadioStationsTest_WhenNoStationInDB_throwException() {
+        //GIVEN
+        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern", "www.radio.mp3", "www.radio.com", "icon", "music,pop", "country"),
+                new RadioStation("5678", "Music", "www.music.mp3", "www.music.com", "pic", "mute,hip", "somewhere")));
+        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
+
+        //WHEN & THEN
+        Exception exception = assertThrows(NoSuchStationException.class, () -> radioStationService.getStations(1, "NotExisting", "NotExisting", "NotExisting"));
+
+        String expectedMessage = "No stations found.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
@@ -64,37 +192,6 @@ class RadioStationServiceTest {
         assertThat(actual).isNull();
         verify(radioStationRepo, times(1)).findByStationuuid(Mockito.any(String.class));
         verifyNoMoreInteractions(radioStationRepo);
-    }
-
-    @Test
-    void getRadioStationsBySearchNameTest_WhenSearchNameBayInDatabaseAndLimit1_ReturnListWith1Object() throws NoSuchStationException {
-        //GIVEN
-        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon", "music", "country")));
-        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
-
-        //WHEN
-        List<RadioStation> actual = radioStationService.getRadioStationsBySearchName(1, "Bay");
-
-        //THEN
-        assertThat(actual).containsExactlyInAnyOrder(new RadioStation("1234", "Bayern 3", "www.radio.mp3", "www.radio.com", "icon", "music", "country"));
-        verify(radioStationRepo, times(1)).findAll();
-        verifyNoMoreInteractions(radioStationRepo);
-    }
-
-    @Test
-    void getRadioStationsBySearchNameTest_WhenSearchNameBayNotInDatabaseAndLimit1_ThenThrowException() {
-        //GIVEN
-        Mockito.when(radioStationRepo.findAll()).thenReturn(List.of(new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "country")));
-        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
-        String notExistingSearchName = "Bla";
-
-        //WHEN & THEN
-        Exception exception = assertThrows(NoSuchStationException.class, () -> radioStationService.getRadioStationsBySearchName(20, notExistingSearchName));
-
-        String expectedMessage = "No stations found with name " + notExistingSearchName + ".";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
@@ -131,26 +228,6 @@ class RadioStationServiceTest {
         //THEN
         assertThat(actual).containsExactlyInAnyOrder("Show all", "Germany");
         verify(radioStationRepo, times(1)).findAll();
-        verifyNoMoreInteractions(radioStationRepo);
-    }
-
-    @Test
-    void getStationsFilteredByCountryTest_WhenCountry_ThenReturnStationsInCountry(){
-        //GIVEN
-        Mockito.when(radioStationRepo.getRadioStationByCountry(Mockito.any(String.class))).thenReturn(List.of(
-                new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
-                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany")));
-
-        RadioStationService radioStationService = new RadioStationService(radioStationRepo);
-
-        //WHEN
-        List<RadioStation> actual = radioStationService.getStationsFilteredByCountry(2,"Germany");
-
-        //THEN
-        assertThat(actual).containsExactlyInAnyOrder(
-                new RadioStation("1234", "Radio", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"),
-                new RadioStation("1234", "RadioGer", "www.radio.mp3", "www.radio.com", "icon", "music", "Germany"));
-        verify(radioStationRepo, times(1)).getRadioStationByCountry(Mockito.any(String.class));
         verifyNoMoreInteractions(radioStationRepo);
     }
 
