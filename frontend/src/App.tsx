@@ -64,14 +64,8 @@ function App() {
     } else {
       setNowPlayingStation(station);
       setStationOnNowPlayingScreen(station);
-      if (user){
-        setAudioSrc(
-          `/api/audio/play?stationuuid=${station.stationuuid}&userId=${user.id}`
-        )
-      } else {
-        setAudioSrc(
-          `/api/audio/play?stationuuid=${station.stationuuid}`
-      );}
+      setAudioSrc(
+        `/api/audio/play?stationuuid=${station.stationuuid}`);
     }
   };
 
