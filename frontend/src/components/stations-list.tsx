@@ -36,7 +36,7 @@ export const StationsList: React.FC<StationsListProps> = ({
       axios.get("/api/stations/getAllCountries").then((response) => {
         setCountryFilterElems(response.data);
       });
-    }, [limit, country, tag]);
+    }, [limit, country]);
 
     useEffect(() => {
       // set favourites when user changed
@@ -108,7 +108,16 @@ export const StationsList: React.FC<StationsListProps> = ({
       }
     };
 
-    return (
+  const onTagSearch = (event: { preventDefault: () => void }) => {
+    fetchData();
+    event.preventDefault();
+  }
+
+  const onResetTag = () => {
+    setTag("")
+  }
+
+  return (
       <div className="flex min-h-screen flex-col items-center gap-5 bg-gradient-to-br from-[#1c4462] to-[#509cb7] bg-auto p-5 pt-10 text-[#f8f1e6]">
         {!showFavourites && (
           <form
@@ -126,6 +135,27 @@ export const StationsList: React.FC<StationsListProps> = ({
               className="border-transparent"
               type="button"
               onClick={onResetSearch}
+            >
+              x
+            </button>
+          </form>
+        )}
+        {!showFavourites && (
+          <form
+            className="flex w-2/3 items-center justify-end gap-3 pr-14"
+            onSubmit={onTagSearch}
+          >
+            Search for genre{" "}
+            <input
+              className="bg-[#f8f1e6] text-[#17233c]"
+              value={tag}
+              onChange={(event) => setTag(event.target.value)}
+              placeholder=""
+            />
+            <button
+              className="border-transparent"
+              type="button"
+              onClick={onResetTag}
             >
               x
             </button>
