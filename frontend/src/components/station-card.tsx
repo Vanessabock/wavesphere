@@ -34,7 +34,7 @@ export const StationCard: React.FC<StationCardProps> = ({
         <div className="flex flex-col justify-center">
             <div className="flex flex-row justify-between text-[#f8f1e6] p-3 pt-3.5">
                 <div className="flex flex-row">
-                    <img src={station.favicon || placeholderRadio} alt="RadioImage"
+                    <img src={station.favicon || placeholderRadio} alt="Img"
                          className="flex h-7 mr-5 select-none object-contain"/>
                     <p className="pt-1"> {station.name} </p>
                     <a className="border-transparent cursor-pointer pl-3 pt-2" href={station.homepage}
