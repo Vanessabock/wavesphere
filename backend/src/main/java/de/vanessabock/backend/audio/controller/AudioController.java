@@ -61,7 +61,6 @@ public class AudioController {
                 response.flushBuffer();
             }
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
             double listenedTime = ((System.currentTimeMillis() - startTime) * 0.001);
             userService.addListenedTimeToUser(user, radioStation.getName(), listenedTime);
         }
